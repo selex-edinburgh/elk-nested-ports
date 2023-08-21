@@ -596,26 +596,48 @@ ruleElkPort returns [EObject current=null]
 			)*
 			(
 				(
-					{
-						newCompositeNode(grammarAccess.getElkPortAccess().getLabelsElkLabelParserRuleCall_2_3_0());
-					}
-					lv_labels_5_0=ruleElkLabel
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getElkPortRule());
+					(
+						{
+							newCompositeNode(grammarAccess.getElkPortAccess().getLabelsElkLabelParserRuleCall_2_3_0_0());
 						}
-						add(
-							$current,
-							"labels",
-							lv_labels_5_0,
-							"org.eclipse.elk.graph.text.ElkGraph.ElkLabel");
-						afterParserOrEnumRuleCall();
-					}
+						lv_labels_5_0=ruleElkLabel
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getElkPortRule());
+							}
+							add(
+								$current,
+								"labels",
+								lv_labels_5_0,
+								"org.eclipse.elk.graph.text.ElkGraph.ElkLabel");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				    |
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getElkPortAccess().getSubPortsElkPortParserRuleCall_2_3_1_0());
+						}
+						lv_subPorts_6_0=ruleElkPort
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getElkPortRule());
+							}
+							add(
+								$current,
+								"subPorts",
+								lv_subPorts_6_0,
+								"org.eclipse.elk.graph.text.ElkGraph.ElkPort");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
 			)*
-			otherlv_6='}'
+			otherlv_7='}'
 			{
-				newLeafNode(otherlv_6, grammarAccess.getElkPortAccess().getRightCurlyBracketKeyword_2_4());
+				newLeafNode(otherlv_7, grammarAccess.getElkPortAccess().getRightCurlyBracketKeyword_2_4());
 			}
 		)?
 	)

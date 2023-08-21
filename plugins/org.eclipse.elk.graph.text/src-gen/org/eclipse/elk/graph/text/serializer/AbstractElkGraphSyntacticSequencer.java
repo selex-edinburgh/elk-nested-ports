@@ -54,11 +54,14 @@ public abstract class AbstractElkGraphSyntacticSequencer extends AbstractSyntact
 	}
 
 	/**
+	 * <pre>
 	 * Ambiguous syntax:
 	 *     ('{' '}')?
 	 *
 	 * This ambiguous syntax occurs at:
 	 *     targets+=[ElkConnectableShape|QualifiedId] (ambiguity) (rule end)
+	 
+	 * </pre>
 	 */
 	protected void emit_ElkEdge___LeftCurlyBracketKeyword_7_0_RightCurlyBracketKeyword_7_4__q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
 		acceptNodes(transition, nodes);

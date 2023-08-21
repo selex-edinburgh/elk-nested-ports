@@ -91,7 +91,7 @@ public interface ElkBendPoint extends EObject {
      * <!-- begin-model-doc -->
      * Sets the bend point's x and y coordinates simultaneously by calling their respective set methods.
      * <!-- end-model-doc -->
-     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='setX(x);\nsetY(y);'"
+     * @model
      * @generated
      */
     void set(double x, double y);

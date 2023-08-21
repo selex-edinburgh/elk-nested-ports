@@ -84,6 +84,7 @@ public class ElkLabelImpl extends ElkShapeImpl implements ElkLabel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkGraphElement getParent() {
         if (eContainerFeatureID() != ElkGraphPackage.ELK_LABEL__PARENT) return null;
         return (ElkGraphElement)eInternalContainer();
@@ -104,6 +105,7 @@ public class ElkLabelImpl extends ElkShapeImpl implements ElkLabel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParent(ElkGraphElement newParent) {
         if (newParent != eInternalContainer() || (eContainerFeatureID() != ElkGraphPackage.ELK_LABEL__PARENT && newParent != null)) {
             if (EcoreUtil.isAncestor(this, newParent))
@@ -125,6 +127,7 @@ public class ElkLabelImpl extends ElkShapeImpl implements ElkLabel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getText() {
         return text;
     }
@@ -134,6 +137,7 @@ public class ElkLabelImpl extends ElkShapeImpl implements ElkLabel {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setText(String newText) {
         String oldText = text;
         text = newText;

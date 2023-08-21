@@ -314,7 +314,7 @@ public interface ElkEdgeSection extends EMapPropertyHolder {
      * <!-- begin-model-doc -->
      * Sets the x and y coordinates of the section's start point simultaneously by calling their respective set methods.
      * <!-- end-model-doc -->
-     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='setStartX(x);\nsetStartY(y);'"
+     * @model
      * @generated
      */
     void setStartLocation(double x, double y);
@@ -325,7 +325,7 @@ public interface ElkEdgeSection extends EMapPropertyHolder {
      * <!-- begin-model-doc -->
      * Sets the x and y coordinates of the section's end point simultaneously by calling their respective set methods.
      * <!-- end-model-doc -->
-     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='setEndX(x);\nsetEndY(y);'"
+     * @model
      * @generated
      */
     void setEndLocation(double x, double y);

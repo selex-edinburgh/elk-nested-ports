@@ -114,6 +114,7 @@ public class ElkNodeImpl extends ElkConnectableShapeImpl implements ElkNode {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkPort> getPorts() {
         if (ports == null) {
             ports = new EObjectContainmentWithInverseEList<ElkPort>(ElkPort.class, this, ElkGraphPackage.ELK_NODE__PORTS, ElkGraphPackage.ELK_PORT__PARENT);
@@ -126,6 +127,7 @@ public class ElkNodeImpl extends ElkConnectableShapeImpl implements ElkNode {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkNode> getChildren() {
         if (children == null) {
             children = new EObjectContainmentWithInverseEList<ElkNode>(ElkNode.class, this, ElkGraphPackage.ELK_NODE__CHILDREN, ElkGraphPackage.ELK_NODE__PARENT);
@@ -138,6 +140,7 @@ public class ElkNodeImpl extends ElkConnectableShapeImpl implements ElkNode {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkNode getParent() {
         if (eContainerFeatureID() != ElkGraphPackage.ELK_NODE__PARENT) return null;
         return (ElkNode)eInternalContainer();
@@ -158,6 +161,7 @@ public class ElkNodeImpl extends ElkConnectableShapeImpl implements ElkNode {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParent(ElkNode newParent) {
         if (newParent != eInternalContainer() || (eContainerFeatureID() != ElkGraphPackage.ELK_NODE__PARENT && newParent != null)) {
             if (EcoreUtil.isAncestor(this, newParent))
@@ -179,6 +183,7 @@ public class ElkNodeImpl extends ElkConnectableShapeImpl implements ElkNode {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkEdge> getContainedEdges() {
         if (containedEdges == null) {
             containedEdges = new EObjectContainmentWithInverseEList<ElkEdge>(ElkEdge.class, this, ElkGraphPackage.ELK_NODE__CONTAINED_EDGES, ElkGraphPackage.ELK_EDGE__CONTAINING_NODE);

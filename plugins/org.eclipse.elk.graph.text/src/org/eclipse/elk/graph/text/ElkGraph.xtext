@@ -36,7 +36,7 @@ ElkPort returns ElkPort:
     'port' identifier=ID ('{'
         ShapeLayout?
         properties+=Property*
-        labels+=ElkLabel*
+        (labels+=ElkLabel | subPorts+=ElkPort)*
     '}')?;
 
 fragment ShapeLayout returns ElkShape:

@@ -139,6 +139,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getHeight() {
         return height;
     }
@@ -148,6 +149,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHeight(double newHeight) {
         double oldHeight = height;
         height = newHeight;
@@ -160,6 +162,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getWidth() {
         return width;
     }
@@ -169,6 +172,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setWidth(double newWidth) {
         double oldWidth = width;
         width = newWidth;
@@ -181,6 +185,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getX() {
         return x;
     }
@@ -190,6 +195,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setX(double newX) {
         double oldX = x;
         x = newX;
@@ -202,6 +208,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getY() {
         return y;
     }
@@ -211,6 +218,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setY(double newY) {
         double oldY = y;
         y = newY;
@@ -223,6 +231,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setDimensions(final double width, final double height) {
         setWidth(width);
         setHeight(height);
@@ -233,6 +242,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setLocation(final double x, final double y) {
         setX(x);
         setY(y);
@@ -335,7 +345,7 @@ public abstract class ElkShapeImpl extends ElkGraphElementImpl implements ElkSha
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (height: ");
         result.append(height);
         result.append(", width: ");

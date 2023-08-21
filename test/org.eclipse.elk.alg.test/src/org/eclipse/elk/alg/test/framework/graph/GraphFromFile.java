@@ -89,8 +89,10 @@ public final class GraphFromFile extends TestGraph {
                 .forEach(path -> path.setFilter(GRAPH_FILE_FILTER));
 
         // Turn the abstract paths into absolute paths
-        return resourcePaths.stream().flatMap(path -> path.listResources().stream())
+        List<GraphFromFile> result = resourcePaths.stream().flatMap(path -> path.listResources().stream())
                 .map(path -> new GraphFromFile(path)).collect(Collectors.toList());
+        
+        return result;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////

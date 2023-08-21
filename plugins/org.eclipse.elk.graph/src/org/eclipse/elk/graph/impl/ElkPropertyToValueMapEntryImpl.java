@@ -223,6 +223,7 @@ public class ElkPropertyToValueMapEntryImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public int getHash() {
         if (hash == -1) {
             Object theKey = getKey();
@@ -236,6 +237,7 @@ public class ElkPropertyToValueMapEntryImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setHash(int hash) {
         this.hash = hash;
     }
@@ -245,6 +247,7 @@ public class ElkPropertyToValueMapEntryImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public IProperty<?> getKey() {
         return getTypedKey();
     }
@@ -254,6 +257,7 @@ public class ElkPropertyToValueMapEntryImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setKey(IProperty<?> key) {
         setTypedKey(key);
     }
@@ -263,6 +267,7 @@ public class ElkPropertyToValueMapEntryImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object getValue() {
         return getTypedValue();
     }
@@ -272,6 +277,7 @@ public class ElkPropertyToValueMapEntryImpl extends MinimalEObjectImpl.Container
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public Object setValue(Object value) {
         Object oldValue = getValue();
         setTypedValue(value);

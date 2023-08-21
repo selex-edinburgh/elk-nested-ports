@@ -25,11 +25,11 @@ import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.TerminalRule;
 import org.eclipse.xtext.UnorderedGroup;
 import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
-import org.eclipse.xtext.service.AbstractElementFinder.AbstractGrammarElementFinder;
+import org.eclipse.xtext.service.AbstractElementFinder;
 import org.eclipse.xtext.service.GrammarProvider;
 
 @Singleton
-public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
+public class ElkGraphGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
 	public class RootNodeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.elk.graph.text.ElkGraph.RootNode");
@@ -52,14 +52,17 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cContainedEdgesAssignment_4_3 = (Assignment)cAlternatives_4.eContents().get(3);
 		private final RuleCall cContainedEdgesElkEdgeParserRuleCall_4_3_0 = (RuleCall)cContainedEdgesAssignment_4_3.eContents().get(0);
 		
-		//RootNode ElkNode:
-		//	{ElkNode} ('graph' identifier=ID)?
-		//	ShapeLayout?
-		//	properties+=Property* (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*;
+		//RootNode returns ElkNode:
+		//    {ElkNode} ('graph' identifier=ID)?
+		//    ShapeLayout?
+		//    properties+=Property*
+		//    (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ElkNode} ('graph' identifier=ID)? ShapeLayout? properties+=Property* (labels+=ElkLabel | ports+=ElkPort |
-		//children+=ElkNode | containedEdges+=ElkEdge)*
+		//{ElkNode} ('graph' identifier=ID)?
+		//ShapeLayout?
+		//properties+=Property*
+		//(labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
 		public Group getGroup() { return cGroup; }
 		
 		//{ElkNode}
@@ -135,15 +138,19 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cContainedEdgesElkEdgeParserRuleCall_2_3_3_0 = (RuleCall)cContainedEdgesAssignment_2_3_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
 		
-		//ElkNode:
-		//	'node' identifier=ID ('{'
-		//	ShapeLayout?
-		//	properties+=Property* (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
-		//	'}')?;
+		//ElkNode returns ElkNode:
+		//    'node' identifier=ID ('{'
+		//        ShapeLayout?
+		//        properties+=Property*
+		//        (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
+		//    '}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'node' identifier=ID ('{' ShapeLayout? properties+=Property* (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode |
-		//containedEdges+=ElkEdge)* '}')?
+		//'node' identifier=ID ('{'
+		//    ShapeLayout?
+		//    properties+=Property*
+		//    (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
+		//'}')?
 		public Group getGroup() { return cGroup; }
 		
 		//'node'
@@ -155,8 +162,11 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIdentifierIDTerminalRuleCall_1_0() { return cIdentifierIDTerminalRuleCall_1_0; }
 		
-		//('{' ShapeLayout? properties+=Property* (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode |
-		//containedEdges+=ElkEdge)* '}')?
+		//('{'
+		//       ShapeLayout?
+		//       properties+=Property*
+		//       (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
+		//   '}')?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'{'
@@ -220,15 +230,19 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelsElkLabelParserRuleCall_3_3_0 = (RuleCall)cLabelsAssignment_3_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_3_4 = (Keyword)cGroup_3.eContents().get(4);
 		
-		//ElkLabel:
-		//	'label' (identifier=ID ':')? text=STRING ('{'
-		//	ShapeLayout?
-		//	properties+=Property*
-		//	labels+=ElkLabel*
-		//	'}')?;
+		//ElkLabel returns ElkLabel:
+		//    'label' (identifier=ID ':')? text=STRING ('{'
+		//        ShapeLayout?
+		//        properties+=Property*
+		//        labels+=ElkLabel*
+		//    '}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'label' (identifier=ID ':')? text=STRING ('{' ShapeLayout? properties+=Property* labels+=ElkLabel* '}')?
+		//'label' (identifier=ID ':')? text=STRING ('{'
+		//    ShapeLayout?
+		//    properties+=Property*
+		//    labels+=ElkLabel*
+		//'}')?
 		public Group getGroup() { return cGroup; }
 		
 		//'label'
@@ -252,7 +266,11 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//STRING
 		public RuleCall getTextSTRINGTerminalRuleCall_2_0() { return cTextSTRINGTerminalRuleCall_2_0; }
 		
-		//('{' ShapeLayout? properties+=Property* labels+=ElkLabel* '}')?
+		//('{'
+		//       ShapeLayout?
+		//       properties+=Property*
+		//       labels+=ElkLabel*
+		//   '}')?
 		public Group getGroup_3() { return cGroup_3; }
 		
 		//'{'
@@ -287,19 +305,26 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cShapeLayoutParserRuleCall_2_1 = (RuleCall)cGroup_2.eContents().get(1);
 		private final Assignment cPropertiesAssignment_2_2 = (Assignment)cGroup_2.eContents().get(2);
 		private final RuleCall cPropertiesPropertyParserRuleCall_2_2_0 = (RuleCall)cPropertiesAssignment_2_2.eContents().get(0);
-		private final Assignment cLabelsAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
-		private final RuleCall cLabelsElkLabelParserRuleCall_2_3_0 = (RuleCall)cLabelsAssignment_2_3.eContents().get(0);
+		private final Alternatives cAlternatives_2_3 = (Alternatives)cGroup_2.eContents().get(3);
+		private final Assignment cLabelsAssignment_2_3_0 = (Assignment)cAlternatives_2_3.eContents().get(0);
+		private final RuleCall cLabelsElkLabelParserRuleCall_2_3_0_0 = (RuleCall)cLabelsAssignment_2_3_0.eContents().get(0);
+		private final Assignment cSubPortsAssignment_2_3_1 = (Assignment)cAlternatives_2_3.eContents().get(1);
+		private final RuleCall cSubPortsElkPortParserRuleCall_2_3_1_0 = (RuleCall)cSubPortsAssignment_2_3_1.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_2_4 = (Keyword)cGroup_2.eContents().get(4);
 		
-		//ElkPort:
-		//	'port' identifier=ID ('{'
-		//	ShapeLayout?
-		//	properties+=Property*
-		//	labels+=ElkLabel*
-		//	'}')?;
+		//ElkPort returns ElkPort:
+		//    'port' identifier=ID ('{'
+		//        ShapeLayout?
+		//        properties+=Property*
+		//        (labels+=ElkLabel | subPorts+=ElkPort)*
+		//    '}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'port' identifier=ID ('{' ShapeLayout? properties+=Property* labels+=ElkLabel* '}')?
+		//'port' identifier=ID ('{'
+		//    ShapeLayout?
+		//    properties+=Property*
+		//    (labels+=ElkLabel | subPorts+=ElkPort)*
+		//'}')?
 		public Group getGroup() { return cGroup; }
 		
 		//'port'
@@ -311,7 +336,11 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIdentifierIDTerminalRuleCall_1_0() { return cIdentifierIDTerminalRuleCall_1_0; }
 		
-		//('{' ShapeLayout? properties+=Property* labels+=ElkLabel* '}')?
+		//('{'
+		//       ShapeLayout?
+		//       properties+=Property*
+		//       (labels+=ElkLabel | subPorts+=ElkPort)*
+		//   '}')?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'{'
@@ -326,11 +355,20 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//Property
 		public RuleCall getPropertiesPropertyParserRuleCall_2_2_0() { return cPropertiesPropertyParserRuleCall_2_2_0; }
 		
-		//labels+=ElkLabel*
-		public Assignment getLabelsAssignment_2_3() { return cLabelsAssignment_2_3; }
+		//(labels+=ElkLabel | subPorts+=ElkPort)*
+		public Alternatives getAlternatives_2_3() { return cAlternatives_2_3; }
+		
+		//labels+=ElkLabel
+		public Assignment getLabelsAssignment_2_3_0() { return cLabelsAssignment_2_3_0; }
 		
 		//ElkLabel
-		public RuleCall getLabelsElkLabelParserRuleCall_2_3_0() { return cLabelsElkLabelParserRuleCall_2_3_0; }
+		public RuleCall getLabelsElkLabelParserRuleCall_2_3_0_0() { return cLabelsElkLabelParserRuleCall_2_3_0_0; }
+		
+		//subPorts+=ElkPort
+		public Assignment getSubPortsAssignment_2_3_1() { return cSubPortsAssignment_2_3_1; }
+		
+		//ElkPort
+		public RuleCall getSubPortsElkPortParserRuleCall_2_3_1_0() { return cSubPortsElkPortParserRuleCall_2_3_1_0; }
 		
 		//'}'
 		public Keyword getRightCurlyBracketKeyword_2_4() { return cRightCurlyBracketKeyword_2_4; }
@@ -360,11 +398,16 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//fragment ShapeLayout returns ElkShape:
-		//	'layout' '[' (('position' ':' x=Number ',' y=Number)?
-		//	& ('size' ':' width=Number ',' height=Number)?) ']';
+		//    'layout' '['(
+		//        ('position' ':' x=Number ',' y=Number)?
+		//        & ('size' ':' width=Number ',' height=Number)?
+		//    )']';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'layout' '[' (('position' ':' x=Number ',' y=Number)? & ('size' ':' width=Number ',' height=Number)?) ']'
+		//'layout' '['(
+		//    ('position' ':' x=Number ',' y=Number)?
+		//    & ('size' ':' width=Number ',' height=Number)?
+		//)']'
 		public Group getGroup() { return cGroup; }
 		
 		//'layout'
@@ -373,7 +416,10 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//'['
 		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
 		
-		//('position' ':' x=Number ',' y=Number)? & ('size' ':' width=Number ',' height=Number)?
+		//(
+		//        ('position' ':' x=Number ',' y=Number)?
+		//        & ('size' ':' width=Number ',' height=Number)?
+		//    )
 		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
 		
 		//('position' ':' x=Number ',' y=Number)?
@@ -461,19 +507,24 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cLabelsElkLabelParserRuleCall_7_3_0 = (RuleCall)cLabelsAssignment_7_3.eContents().get(0);
 		private final Keyword cRightCurlyBracketKeyword_7_4 = (Keyword)cGroup_7.eContents().get(4);
 		
-		///* SuppressWarnings[BidirectionalReference] */ ElkEdge:
-		//	'edge' (identifier=ID ':')?
-		//	sources+=[ElkConnectableShape|QualifiedId] (',' sources+=[ElkConnectableShape|QualifiedId])* '->'
-		//	targets+=[ElkConnectableShape|QualifiedId] (',' targets+=[ElkConnectableShape|QualifiedId])* ('{'
-		//	EdgeLayout?
-		//	properties+=Property*
-		//	labels+=ElkLabel*
-		//	'}')?;
+		///* SuppressWarnings[BidirectionalReference] */
+		//ElkEdge returns ElkEdge:
+		//    'edge' (identifier=ID ':')?
+		//            sources+=[ElkConnectableShape|QualifiedId] (',' sources+=[ElkConnectableShape|QualifiedId])* '->'
+		//            targets+=[ElkConnectableShape|QualifiedId] (',' targets+=[ElkConnectableShape|QualifiedId])* ('{'
+		//        EdgeLayout?
+		//        properties+=Property*
+		//        labels+=ElkLabel*
+		//    '}')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'edge' (identifier=ID ':')? sources+=[ElkConnectableShape|QualifiedId] (',' sources+=[ElkConnectableShape|QualifiedId])*
-		//'->' targets+=[ElkConnectableShape|QualifiedId] (',' targets+=[ElkConnectableShape|QualifiedId])* ('{' EdgeLayout?
-		//properties+=Property* labels+=ElkLabel* '}')?
+		//'edge' (identifier=ID ':')?
+		//        sources+=[ElkConnectableShape|QualifiedId] (',' sources+=[ElkConnectableShape|QualifiedId])* '->'
+		//        targets+=[ElkConnectableShape|QualifiedId] (',' targets+=[ElkConnectableShape|QualifiedId])* ('{'
+		//    EdgeLayout?
+		//    properties+=Property*
+		//    labels+=ElkLabel*
+		//'}')?
 		public Group getGroup() { return cGroup; }
 		
 		//'edge'
@@ -542,7 +593,11 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedId
 		public RuleCall getTargetsElkConnectableShapeQualifiedIdParserRuleCall_6_1_0_1() { return cTargetsElkConnectableShapeQualifiedIdParserRuleCall_6_1_0_1; }
 		
-		//('{' EdgeLayout? properties+=Property* labels+=ElkLabel* '}')?
+		//('{'
+		//       EdgeLayout?
+		//       properties+=Property*
+		//       labels+=ElkLabel*
+		//   '}')?
 		public Group getGroup_7() { return cGroup_7; }
 		
 		//'{'
@@ -579,10 +634,14 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightSquareBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
 		//fragment EdgeLayout returns ElkEdge:
-		//	'layout' '[' (sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+) ']';
+		//    'layout' '['(
+		//        sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+
+		//    )']';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'layout' '[' (sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+) ']'
+		//'layout' '['(
+		//    sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+
+		//)']'
 		public Group getGroup() { return cGroup; }
 		
 		//'layout'
@@ -591,7 +650,9 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//'['
 		public Keyword getLeftSquareBracketKeyword_1() { return cLeftSquareBracketKeyword_1; }
 		
-		//sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+
+		//(
+		//        sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+
+		//    )
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//sections+=ElkSingleEdgeSection
@@ -655,32 +716,44 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPropertiesAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cPropertiesPropertyParserRuleCall_1_2_0 = (RuleCall)cPropertiesAssignment_1_2.eContents().get(0);
 		
-		//ElkSingleEdgeSection ElkEdgeSection:
-		//	{ElkEdgeSection} ((('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
-		//	& ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
-		//	& ('start' ':' startX=Number ',' startY=Number)?
-		//	& ('end' ':' endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-		//	properties+=Property*);
+		//ElkSingleEdgeSection returns ElkEdgeSection:
+		//    {ElkEdgeSection} (
+		//        (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//        & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//        & ('start' ':' startX=Number ',' startY=Number)?
+		//        & ('end' ':' endX=Number ',' endY=Number)?)
+		//        ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+		//        properties+=Property*
+		//    );
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ElkEdgeSection} ((('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])? & ('outgoing' ':'
-		//outgoingShape=[ElkConnectableShape|QualifiedId])? & ('start' ':' startX=Number ',' startY=Number)? & ('end' ':'
-		//endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-		//properties+=Property*)
+		//{ElkEdgeSection} (
+		//    (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//    & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//    & ('start' ':' startX=Number ',' startY=Number)?
+		//    & ('end' ':' endX=Number ',' endY=Number)?)
+		//    ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+		//    properties+=Property*
+		//)
 		public Group getGroup() { return cGroup; }
 		
 		//{ElkEdgeSection}
 		public Action getElkEdgeSectionAction_0() { return cElkEdgeSectionAction_0; }
 		
-		//(('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])? & ('outgoing' ':'
-		//outgoingShape=[ElkConnectableShape|QualifiedId])? & ('start' ':' startX=Number ',' startY=Number)? & ('end' ':'
-		//endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-		//properties+=Property*
+		//(
+		//       (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//       & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//       & ('start' ':' startX=Number ',' startY=Number)?
+		//       & ('end' ':' endX=Number ',' endY=Number)?)
+		//       ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+		//       properties+=Property*
+		//   )
 		public Group getGroup_1() { return cGroup_1; }
 		
-		//('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])? & ('outgoing' ':'
-		//outgoingShape=[ElkConnectableShape|QualifiedId])? & ('start' ':' startX=Number ',' startY=Number)? & ('end' ':'
-		//endX=Number ',' endY=Number)?
+		//(('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//& ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//& ('start' ':' startX=Number ',' startY=Number)?
+		//& ('end' ':' endX=Number ',' endY=Number)?)
 		public UnorderedGroup getUnorderedGroup_1_0() { return cUnorderedGroup_1_0; }
 		
 		//('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
@@ -860,20 +933,26 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cPropertiesPropertyParserRuleCall_4_2_0 = (RuleCall)cPropertiesAssignment_4_2.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
-		///* SuppressWarnings[BidirectionalReference] */ ElkEdgeSection:
-		//	'section' identifier=ID ('->' outgoingSections+=[ElkEdgeSection] (',' outgoingSections+=[ElkEdgeSection])*)? '['
-		//	((('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
-		//	& ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
-		//	& ('start' ':' startX=Number ',' startY=Number)?
-		//	& ('end' ':' endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-		//	properties+=Property*) ']';
+		///* SuppressWarnings[BidirectionalReference] */
+		//ElkEdgeSection returns ElkEdgeSection:
+		//    'section' identifier=ID ('->' outgoingSections+=[ElkEdgeSection|ID] (',' outgoingSections+=[ElkEdgeSection|ID])*)? '['(
+		//        (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//        & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//        & ('start' ':' startX=Number ',' startY=Number)?
+		//        & ('end' ':' endX=Number ',' endY=Number)?)
+		//        ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+		//        properties+=Property*
+		//    )']';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'section' identifier=ID ('->' outgoingSections+=[ElkEdgeSection] (',' outgoingSections+=[ElkEdgeSection])*)? '['
-		//((('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])? & ('outgoing' ':'
-		//outgoingShape=[ElkConnectableShape|QualifiedId])? & ('start' ':' startX=Number ',' startY=Number)? & ('end' ':'
-		//endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-		//properties+=Property*) ']'
+		//'section' identifier=ID ('->' outgoingSections+=[ElkEdgeSection|ID] (',' outgoingSections+=[ElkEdgeSection|ID])*)? '['(
+		//    (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//    & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//    & ('start' ':' startX=Number ',' startY=Number)?
+		//    & ('end' ':' endX=Number ',' endY=Number)?)
+		//    ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+		//    properties+=Property*
+		//)']'
 		public Group getGroup() { return cGroup; }
 		
 		//'section'
@@ -885,31 +964,31 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIdentifierIDTerminalRuleCall_1_0() { return cIdentifierIDTerminalRuleCall_1_0; }
 		
-		//('->' outgoingSections+=[ElkEdgeSection] (',' outgoingSections+=[ElkEdgeSection])*)?
+		//('->' outgoingSections+=[ElkEdgeSection|ID] (',' outgoingSections+=[ElkEdgeSection|ID])*)?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'->'
 		public Keyword getHyphenMinusGreaterThanSignKeyword_2_0() { return cHyphenMinusGreaterThanSignKeyword_2_0; }
 		
-		//outgoingSections+=[ElkEdgeSection]
+		//outgoingSections+=[ElkEdgeSection|ID]
 		public Assignment getOutgoingSectionsAssignment_2_1() { return cOutgoingSectionsAssignment_2_1; }
 		
-		//[ElkEdgeSection]
+		//[ElkEdgeSection|ID]
 		public CrossReference getOutgoingSectionsElkEdgeSectionCrossReference_2_1_0() { return cOutgoingSectionsElkEdgeSectionCrossReference_2_1_0; }
 		
 		//ID
 		public RuleCall getOutgoingSectionsElkEdgeSectionIDTerminalRuleCall_2_1_0_1() { return cOutgoingSectionsElkEdgeSectionIDTerminalRuleCall_2_1_0_1; }
 		
-		//(',' outgoingSections+=[ElkEdgeSection])*
+		//(',' outgoingSections+=[ElkEdgeSection|ID])*
 		public Group getGroup_2_2() { return cGroup_2_2; }
 		
 		//','
 		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
 		
-		//outgoingSections+=[ElkEdgeSection]
+		//outgoingSections+=[ElkEdgeSection|ID]
 		public Assignment getOutgoingSectionsAssignment_2_2_1() { return cOutgoingSectionsAssignment_2_2_1; }
 		
-		//[ElkEdgeSection]
+		//[ElkEdgeSection|ID]
 		public CrossReference getOutgoingSectionsElkEdgeSectionCrossReference_2_2_1_0() { return cOutgoingSectionsElkEdgeSectionCrossReference_2_2_1_0; }
 		
 		//ID
@@ -918,15 +997,20 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//'['
 		public Keyword getLeftSquareBracketKeyword_3() { return cLeftSquareBracketKeyword_3; }
 		
-		//(('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])? & ('outgoing' ':'
-		//outgoingShape=[ElkConnectableShape|QualifiedId])? & ('start' ':' startX=Number ',' startY=Number)? & ('end' ':'
-		//endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-		//properties+=Property*
+		//(
+		//        (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//        & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//        & ('start' ':' startX=Number ',' startY=Number)?
+		//        & ('end' ':' endX=Number ',' endY=Number)?)
+		//        ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+		//        properties+=Property*
+		//    )
 		public Group getGroup_4() { return cGroup_4; }
 		
-		//('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])? & ('outgoing' ':'
-		//outgoingShape=[ElkConnectableShape|QualifiedId])? & ('start' ':' startX=Number ',' startY=Number)? & ('end' ':'
-		//endX=Number ',' endY=Number)?
+		//(('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+		//& ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+		//& ('start' ':' startX=Number ',' startY=Number)?
+		//& ('end' ':' endX=Number ',' endY=Number)?)
 		public UnorderedGroup getUnorderedGroup_4_0() { return cUnorderedGroup_4_0; }
 		
 		//('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
@@ -1058,8 +1142,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cYAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cYNumberParserRuleCall_2_0 = (RuleCall)cYAssignment_2.eContents().get(0);
 		
-		//ElkBendPoint:
-		//	x=Number ',' y=Number;
+		//ElkBendPoint returns ElkBendPoint:
+		//    x=Number ',' y=Number;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//x=Number ',' y=Number
@@ -1089,7 +1173,7 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
 		//QualifiedId:
-		//	ID ('.' ID)*;
+		//    ID ('.' ID)*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//ID ('.' ID)*
@@ -1113,8 +1197,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSIGNED_INTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFLOATTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//Number ecore::EDouble:
-		//	SIGNED_INT | FLOAT;
+		//Number returns ecore::EDouble:
+		//    SIGNED_INT | FLOAT;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//SIGNED_INT | FLOAT
@@ -1143,8 +1227,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValueBooleanValueParserRuleCall_2_3_0 = (RuleCall)cValueAssignment_2_3.eContents().get(0);
 		private final Keyword cNullKeyword_2_4 = (Keyword)cAlternatives_2.eContents().get(4);
 		
-		//Property ElkPropertyToValueMapEntry:
-		//	key=PropertyKey ':' (value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue | 'null');
+		//Property returns ElkPropertyToValueMapEntry:
+		//    key=PropertyKey ':' (value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue | 'null');
 		@Override public ParserRule getRule() { return rule; }
 		
 		//key=PropertyKey ':' (value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue | 'null')
@@ -1159,7 +1243,7 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		//':'
 		public Keyword getColonKeyword_1() { return cColonKeyword_1; }
 		
-		//value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue | 'null'
+		//(value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue | 'null')
 		public Alternatives getAlternatives_2() { return cAlternatives_2; }
 		
 		//value=StringValue
@@ -1197,8 +1281,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
 		
-		//PropertyKey IProperty hidden():
-		//	ID ('.' ID)*;
+		//PropertyKey returns IProperty hidden():
+		//    ID ('.' ID)*;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//ID ('.' ID)*
@@ -1220,8 +1304,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.elk.graph.text.ElkGraph.StringValue");
 		private final RuleCall cSTRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//StringValue ecore::EJavaObject:
-		//	STRING;
+		//StringValue returns ecore::EJavaObject:
+		//    STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//STRING
@@ -1231,8 +1315,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.eclipse.elk.graph.text.ElkGraph.QualifiedIdValue");
 		private final RuleCall cQualifiedIdParserRuleCall = (RuleCall)rule.eContents().get(1);
 		
-		//QualifiedIdValue ecore::EJavaObject:
-		//	QualifiedId;
+		//QualifiedIdValue returns ecore::EJavaObject:
+		//    QualifiedId;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//QualifiedId
@@ -1244,8 +1328,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSIGNED_INTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cFLOATTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//NumberValue ecore::EJavaObject:
-		//	SIGNED_INT | FLOAT;
+		//NumberValue returns ecore::EJavaObject:
+		//    SIGNED_INT | FLOAT;
 		@Override public ParserRule getRule() { return rule; }
 		
 		//SIGNED_INT | FLOAT
@@ -1263,8 +1347,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTrueKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
 		private final Keyword cFalseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		
-		//BooleanValue ecore::EJavaObject:
-		//	'true' | 'false';
+		//BooleanValue returns ecore::EJavaObject:
+		//    'true' | 'false';
 		@Override public ParserRule getRule() { return rule; }
 		
 		//'true' | 'false'
@@ -1357,10 +1441,11 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	//RootNode ElkNode:
-	//	{ElkNode} ('graph' identifier=ID)?
-	//	ShapeLayout?
-	//	properties+=Property* (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*;
+	//RootNode returns ElkNode:
+	//    {ElkNode} ('graph' identifier=ID)?
+	//    ShapeLayout?
+	//    properties+=Property*
+	//    (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*;
 	public RootNodeElements getRootNodeAccess() {
 		return pRootNode;
 	}
@@ -1369,11 +1454,12 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootNodeAccess().getRule();
 	}
 	
-	//ElkNode:
-	//	'node' identifier=ID ('{'
-	//	ShapeLayout?
-	//	properties+=Property* (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
-	//	'}')?;
+	//ElkNode returns ElkNode:
+	//    'node' identifier=ID ('{'
+	//        ShapeLayout?
+	//        properties+=Property*
+	//        (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
+	//    '}')?;
 	public ElkNodeElements getElkNodeAccess() {
 		return pElkNode;
 	}
@@ -1382,12 +1468,12 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getElkNodeAccess().getRule();
 	}
 	
-	//ElkLabel:
-	//	'label' (identifier=ID ':')? text=STRING ('{'
-	//	ShapeLayout?
-	//	properties+=Property*
-	//	labels+=ElkLabel*
-	//	'}')?;
+	//ElkLabel returns ElkLabel:
+	//    'label' (identifier=ID ':')? text=STRING ('{'
+	//        ShapeLayout?
+	//        properties+=Property*
+	//        labels+=ElkLabel*
+	//    '}')?;
 	public ElkLabelElements getElkLabelAccess() {
 		return pElkLabel;
 	}
@@ -1396,12 +1482,12 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getElkLabelAccess().getRule();
 	}
 	
-	//ElkPort:
-	//	'port' identifier=ID ('{'
-	//	ShapeLayout?
-	//	properties+=Property*
-	//	labels+=ElkLabel*
-	//	'}')?;
+	//ElkPort returns ElkPort:
+	//    'port' identifier=ID ('{'
+	//        ShapeLayout?
+	//        properties+=Property*
+	//        (labels+=ElkLabel | subPorts+=ElkPort)*
+	//    '}')?;
 	public ElkPortElements getElkPortAccess() {
 		return pElkPort;
 	}
@@ -1411,8 +1497,10 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//fragment ShapeLayout returns ElkShape:
-	//	'layout' '[' (('position' ':' x=Number ',' y=Number)?
-	//	& ('size' ':' width=Number ',' height=Number)?) ']';
+	//    'layout' '['(
+	//        ('position' ':' x=Number ',' y=Number)?
+	//        & ('size' ':' width=Number ',' height=Number)?
+	//    )']';
 	public ShapeLayoutElements getShapeLayoutAccess() {
 		return pShapeLayout;
 	}
@@ -1421,14 +1509,15 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getShapeLayoutAccess().getRule();
 	}
 	
-	///* SuppressWarnings[BidirectionalReference] */ ElkEdge:
-	//	'edge' (identifier=ID ':')?
-	//	sources+=[ElkConnectableShape|QualifiedId] (',' sources+=[ElkConnectableShape|QualifiedId])* '->'
-	//	targets+=[ElkConnectableShape|QualifiedId] (',' targets+=[ElkConnectableShape|QualifiedId])* ('{'
-	//	EdgeLayout?
-	//	properties+=Property*
-	//	labels+=ElkLabel*
-	//	'}')?;
+	///* SuppressWarnings[BidirectionalReference] */
+	//ElkEdge returns ElkEdge:
+	//    'edge' (identifier=ID ':')?
+	//            sources+=[ElkConnectableShape|QualifiedId] (',' sources+=[ElkConnectableShape|QualifiedId])* '->'
+	//            targets+=[ElkConnectableShape|QualifiedId] (',' targets+=[ElkConnectableShape|QualifiedId])* ('{'
+	//        EdgeLayout?
+	//        properties+=Property*
+	//        labels+=ElkLabel*
+	//    '}')?;
 	public ElkEdgeElements getElkEdgeAccess() {
 		return pElkEdge;
 	}
@@ -1438,7 +1527,9 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//fragment EdgeLayout returns ElkEdge:
-	//	'layout' '[' (sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+) ']';
+	//    'layout' '['(
+	//        sections+=ElkSingleEdgeSection | sections+=ElkEdgeSection+
+	//    )']';
 	public EdgeLayoutElements getEdgeLayoutAccess() {
 		return pEdgeLayout;
 	}
@@ -1447,12 +1538,15 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getEdgeLayoutAccess().getRule();
 	}
 	
-	//ElkSingleEdgeSection ElkEdgeSection:
-	//	{ElkEdgeSection} ((('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
-	//	& ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
-	//	& ('start' ':' startX=Number ',' startY=Number)?
-	//	& ('end' ':' endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-	//	properties+=Property*);
+	//ElkSingleEdgeSection returns ElkEdgeSection:
+	//    {ElkEdgeSection} (
+	//        (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+	//        & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+	//        & ('start' ':' startX=Number ',' startY=Number)?
+	//        & ('end' ':' endX=Number ',' endY=Number)?)
+	//        ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+	//        properties+=Property*
+	//    );
 	public ElkSingleEdgeSectionElements getElkSingleEdgeSectionAccess() {
 		return pElkSingleEdgeSection;
 	}
@@ -1461,13 +1555,16 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getElkSingleEdgeSectionAccess().getRule();
 	}
 	
-	///* SuppressWarnings[BidirectionalReference] */ ElkEdgeSection:
-	//	'section' identifier=ID ('->' outgoingSections+=[ElkEdgeSection] (',' outgoingSections+=[ElkEdgeSection])*)? '['
-	//	((('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
-	//	& ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
-	//	& ('start' ':' startX=Number ',' startY=Number)?
-	//	& ('end' ':' endX=Number ',' endY=Number)?) ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
-	//	properties+=Property*) ']';
+	///* SuppressWarnings[BidirectionalReference] */
+	//ElkEdgeSection returns ElkEdgeSection:
+	//    'section' identifier=ID ('->' outgoingSections+=[ElkEdgeSection|ID] (',' outgoingSections+=[ElkEdgeSection|ID])*)? '['(
+	//        (('incoming' ':' incomingShape=[ElkConnectableShape|QualifiedId])?
+	//        & ('outgoing' ':' outgoingShape=[ElkConnectableShape|QualifiedId])?
+	//        & ('start' ':' startX=Number ',' startY=Number)?
+	//        & ('end' ':' endX=Number ',' endY=Number)?)
+	//        ('bends' ':' bendPoints+=ElkBendPoint ('|' bendPoints+=ElkBendPoint)*)?
+	//        properties+=Property*
+	//    )']';
 	public ElkEdgeSectionElements getElkEdgeSectionAccess() {
 		return pElkEdgeSection;
 	}
@@ -1476,8 +1573,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getElkEdgeSectionAccess().getRule();
 	}
 	
-	//ElkBendPoint:
-	//	x=Number ',' y=Number;
+	//ElkBendPoint returns ElkBendPoint:
+	//    x=Number ',' y=Number;
 	public ElkBendPointElements getElkBendPointAccess() {
 		return pElkBendPoint;
 	}
@@ -1487,7 +1584,7 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//QualifiedId:
-	//	ID ('.' ID)*;
+	//    ID ('.' ID)*;
 	public QualifiedIdElements getQualifiedIdAccess() {
 		return pQualifiedId;
 	}
@@ -1496,8 +1593,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getQualifiedIdAccess().getRule();
 	}
 	
-	//Number ecore::EDouble:
-	//	SIGNED_INT | FLOAT;
+	//Number returns ecore::EDouble:
+	//    SIGNED_INT | FLOAT;
 	public NumberElements getNumberAccess() {
 		return pNumber;
 	}
@@ -1506,8 +1603,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getNumberAccess().getRule();
 	}
 	
-	//Property ElkPropertyToValueMapEntry:
-	//	key=PropertyKey ':' (value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue | 'null');
+	//Property returns ElkPropertyToValueMapEntry:
+	//    key=PropertyKey ':' (value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue | 'null');
 	public PropertyElements getPropertyAccess() {
 		return pProperty;
 	}
@@ -1516,8 +1613,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getPropertyAccess().getRule();
 	}
 	
-	//PropertyKey IProperty hidden():
-	//	ID ('.' ID)*;
+	//PropertyKey returns IProperty hidden():
+	//    ID ('.' ID)*;
 	public PropertyKeyElements getPropertyKeyAccess() {
 		return pPropertyKey;
 	}
@@ -1526,8 +1623,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getPropertyKeyAccess().getRule();
 	}
 	
-	//StringValue ecore::EJavaObject:
-	//	STRING;
+	//StringValue returns ecore::EJavaObject:
+	//    STRING;
 	public StringValueElements getStringValueAccess() {
 		return pStringValue;
 	}
@@ -1536,8 +1633,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getStringValueAccess().getRule();
 	}
 	
-	//QualifiedIdValue ecore::EJavaObject:
-	//	QualifiedId;
+	//QualifiedIdValue returns ecore::EJavaObject:
+	//    QualifiedId;
 	public QualifiedIdValueElements getQualifiedIdValueAccess() {
 		return pQualifiedIdValue;
 	}
@@ -1546,8 +1643,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getQualifiedIdValueAccess().getRule();
 	}
 	
-	//NumberValue ecore::EJavaObject:
-	//	SIGNED_INT | FLOAT;
+	//NumberValue returns ecore::EJavaObject:
+	//    SIGNED_INT | FLOAT;
 	public NumberValueElements getNumberValueAccess() {
 		return pNumberValue;
 	}
@@ -1556,8 +1653,8 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 		return getNumberValueAccess().getRule();
 	}
 	
-	//BooleanValue ecore::EJavaObject:
-	//	'true' | 'false';
+	//BooleanValue returns ecore::EJavaObject:
+	//    'true' | 'false';
 	public BooleanValueElements getBooleanValueAccess() {
 		return pBooleanValue;
 	}
@@ -1567,56 +1664,51 @@ public class ElkGraphGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//terminal SIGNED_INT returns ecore::EInt:
-	//	('+' | '-')? INT;
+	//    ('+'|'-')? INT;
 	public TerminalRule getSIGNED_INTRule() {
 		return tSIGNED_INT;
 	}
 	
 	//terminal FLOAT returns ecore::EDouble:
-	//	('+' | '-')? (INT '.' INT | INT ('.' INT)? ('e' | 'E') ('+' | '-')? INT);
+	//    ('+'|'-')? (INT '.' INT | INT ('.' INT)? ('e'|'E') ('+'|'-')? INT);
 	public TerminalRule getFLOATRule() {
 		return tFLOAT;
 	}
 	
-	//terminal ID:
-	//	'^'? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
+	//terminal ID: '^'?('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
 	}
 	
-	//terminal INT returns ecore::EInt:
-	//	'0'..'9'+;
+	//terminal INT returns ecore::EInt: ('0'..'9')+;
 	public TerminalRule getINTRule() {
 		return gaTerminals.getINTRule();
 	}
 	
 	//terminal STRING:
-	//	'"' ('\\' . | !('\\' | '"'))* '"' |
-	//	"'" ('\\' . | !('\\' | "'"))* "'";
+	//            '"' ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|'"') )* '"' |
+	//            "'" ( '\\' . /* 'b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\' */ | !('\\'|"'") )* "'"
+	//        ;
 	public TerminalRule getSTRINGRule() {
 		return gaTerminals.getSTRINGRule();
 	}
 	
-	//terminal ML_COMMENT:
-	//	'/*'->'*/';
+	//terminal ML_COMMENT : '/*' -> '*/';
 	public TerminalRule getML_COMMENTRule() {
 		return gaTerminals.getML_COMMENTRule();
 	}
 	
-	//terminal SL_COMMENT:
-	//	'//' !('\n' | '\r')* ('\r'? '\n')?;
+	//terminal SL_COMMENT : '//' !('\n'|'\r')* ('\r'? '\n')?;
 	public TerminalRule getSL_COMMENTRule() {
 		return gaTerminals.getSL_COMMENTRule();
 	}
 	
-	//terminal WS:
-	//	' ' | '\t' | '\r' | '\n'+;
+	//terminal WS         : (' '|'\t'|'\r'|'\n')+;
 	public TerminalRule getWSRule() {
 		return gaTerminals.getWSRule();
 	}
 	
-	//terminal ANY_OTHER:
-	//	.;
+	//terminal ANY_OTHER: .;
 	public TerminalRule getANY_OTHERRule() {
 		return gaTerminals.getANY_OTHERRule();
 	}

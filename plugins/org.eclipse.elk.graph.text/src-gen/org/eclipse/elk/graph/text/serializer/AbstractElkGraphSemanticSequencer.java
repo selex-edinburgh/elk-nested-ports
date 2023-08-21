@@ -85,6 +85,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	}
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElkEdge returns ElkEdge
 	 *
@@ -99,6 +100,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	 *         properties+=Property* 
 	 *         labels+=ElkLabel*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_EdgeLayout_ElkEdge(ISerializationContext context, ElkEdge semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -106,11 +108,13 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElkBendPoint returns ElkBendPoint
 	 *
 	 * Constraint:
 	 *     (x=Number y=Number)
+	 * </pre>
 	 */
 	protected void sequence_ElkBendPoint(ISerializationContext context, ElkBendPoint semanticObject) {
 		if (errorAcceptor != null) {
@@ -127,6 +131,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElkEdgeSection returns ElkEdgeSection
 	 *
@@ -142,6 +147,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	 *         (bendPoints+=ElkBendPoint bendPoints+=ElkBendPoint*)? 
 	 *         properties+=Property*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ElkEdgeSection(ISerializationContext context, ElkEdgeSection semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -149,11 +155,13 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElkLabel returns ElkLabel
 	 *
 	 * Constraint:
 	 *     (identifier=ID? text=STRING ((x=Number y=Number) | (width=Number height=Number))* properties+=Property* labels+=ElkLabel*)
+	 * </pre>
 	 */
 	protected void sequence_ElkLabel_ShapeLayout(ISerializationContext context, ElkLabel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -161,6 +169,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElkNode returns ElkNode
 	 *
@@ -171,6 +180,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	 *         properties+=Property* 
 	 *         (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ElkNode_ShapeLayout(ISerializationContext context, ElkNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -178,11 +188,13 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElkPort returns ElkPort
 	 *
 	 * Constraint:
-	 *     (identifier=ID ((x=Number y=Number) | (width=Number height=Number))* properties+=Property* labels+=ElkLabel*)
+	 *     (identifier=ID ((x=Number y=Number) | (width=Number height=Number))* properties+=Property* (labels+=ElkLabel | subPorts+=ElkPort)*)
+	 * </pre>
 	 */
 	protected void sequence_ElkPort_ShapeLayout(ISerializationContext context, ElkPort semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -190,6 +202,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     ElkSingleEdgeSection returns ElkEdgeSection
 	 *
@@ -203,6 +216,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	 *         (bendPoints+=ElkBendPoint bendPoints+=ElkBendPoint*)? 
 	 *         properties+=Property*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_ElkSingleEdgeSection(ISerializationContext context, ElkEdgeSection semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -210,11 +224,13 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     Property returns ElkPropertyToValueMapEntry
 	 *
 	 * Constraint:
 	 *     (key=PropertyKey (value=StringValue | value=QualifiedIdValue | value=NumberValue | value=BooleanValue)?)
+	 * </pre>
 	 */
 	protected void sequence_Property(ISerializationContext context, Map.Entry semanticObject) {
 		genericSequencer.createSequence(context, (EObject) semanticObject);
@@ -222,6 +238,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	
 	
 	/**
+	 * <pre>
 	 * Contexts:
 	 *     RootNode returns ElkNode
 	 *
@@ -232,6 +249,7 @@ public abstract class AbstractElkGraphSemanticSequencer extends AbstractDelegati
 	 *         properties+=Property* 
 	 *         (labels+=ElkLabel | ports+=ElkPort | children+=ElkNode | containedEdges+=ElkEdge)*
 	 *     )
+	 * </pre>
 	 */
 	protected void sequence_RootNode_ShapeLayout(ISerializationContext context, ElkNode semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

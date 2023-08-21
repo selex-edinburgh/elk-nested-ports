@@ -171,7 +171,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
 
     /**
      * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
-     * 
+     *
      * <p>This method is used to initialize {@link ElkGraphPackage#eINSTANCE} when that field is accessed.
      * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
      * <!-- begin-user-doc -->
@@ -185,7 +185,8 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
         if (isInited) return (ElkGraphPackage)EPackage.Registry.INSTANCE.getEPackage(ElkGraphPackage.eNS_URI);
 
         // Obtain or create and register package
-        ElkGraphPackageImpl theElkGraphPackage = (ElkGraphPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ElkGraphPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new ElkGraphPackageImpl());
+        Object registeredElkGraphPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+        ElkGraphPackageImpl theElkGraphPackage = registeredElkGraphPackage instanceof ElkGraphPackageImpl ? (ElkGraphPackageImpl)registeredElkGraphPackage : new ElkGraphPackageImpl();
 
         isInited = true;
 
@@ -198,7 +199,6 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
         // Mark meta-data to indicate it can't be changed
         theElkGraphPackage.freeze();
 
-  
         // Update the registry and return the package
         EPackage.Registry.INSTANCE.put(ElkGraphPackage.eNS_URI, theElkGraphPackage);
         return theElkGraphPackage;
@@ -209,6 +209,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getIPropertyHolder() {
         return iPropertyHolderEClass;
     }
@@ -218,6 +219,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getEMapPropertyHolder() {
         return eMapPropertyHolderEClass;
     }
@@ -227,6 +229,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getEMapPropertyHolder_Properties() {
         return (EReference)eMapPropertyHolderEClass.getEStructuralFeatures().get(0);
     }
@@ -236,6 +239,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkGraphElement() {
         return elkGraphElementEClass;
     }
@@ -245,6 +249,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkGraphElement_Labels() {
         return (EReference)elkGraphElementEClass.getEStructuralFeatures().get(0);
     }
@@ -254,6 +259,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkGraphElement_Identifier() {
         return (EAttribute)elkGraphElementEClass.getEStructuralFeatures().get(1);
     }
@@ -263,6 +269,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkShape() {
         return elkShapeEClass;
     }
@@ -272,6 +279,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkShape_Height() {
         return (EAttribute)elkShapeEClass.getEStructuralFeatures().get(0);
     }
@@ -281,6 +289,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkShape_Width() {
         return (EAttribute)elkShapeEClass.getEStructuralFeatures().get(1);
     }
@@ -290,6 +299,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkShape_X() {
         return (EAttribute)elkShapeEClass.getEStructuralFeatures().get(2);
     }
@@ -299,6 +309,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkShape_Y() {
         return (EAttribute)elkShapeEClass.getEStructuralFeatures().get(3);
     }
@@ -308,6 +319,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkLabel() {
         return elkLabelEClass;
     }
@@ -317,6 +329,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkLabel_Parent() {
         return (EReference)elkLabelEClass.getEStructuralFeatures().get(0);
     }
@@ -326,6 +339,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkLabel_Text() {
         return (EAttribute)elkLabelEClass.getEStructuralFeatures().get(1);
     }
@@ -335,6 +349,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkConnectableShape() {
         return elkConnectableShapeEClass;
     }
@@ -344,6 +359,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkConnectableShape_OutgoingEdges() {
         return (EReference)elkConnectableShapeEClass.getEStructuralFeatures().get(0);
     }
@@ -353,6 +369,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkConnectableShape_IncomingEdges() {
         return (EReference)elkConnectableShapeEClass.getEStructuralFeatures().get(1);
     }
@@ -362,6 +379,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkNode() {
         return elkNodeEClass;
     }
@@ -371,6 +389,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkNode_Ports() {
         return (EReference)elkNodeEClass.getEStructuralFeatures().get(0);
     }
@@ -380,6 +399,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkNode_Children() {
         return (EReference)elkNodeEClass.getEStructuralFeatures().get(1);
     }
@@ -389,6 +409,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkNode_Parent() {
         return (EReference)elkNodeEClass.getEStructuralFeatures().get(2);
     }
@@ -398,6 +419,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkNode_ContainedEdges() {
         return (EReference)elkNodeEClass.getEStructuralFeatures().get(3);
     }
@@ -407,6 +429,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkNode_Hierarchical() {
         return (EAttribute)elkNodeEClass.getEStructuralFeatures().get(4);
     }
@@ -416,6 +439,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkPort() {
         return elkPortEClass;
     }
@@ -425,6 +449,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkPort_Parent() {
         return (EReference)elkPortEClass.getEStructuralFeatures().get(0);
     }
@@ -434,6 +459,27 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
+    public EReference getElkPort_SubPorts() {
+        return (EReference)elkPortEClass.getEStructuralFeatures().get(1);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public EReference getElkPort_ParentPort() {
+        return (EReference)elkPortEClass.getEStructuralFeatures().get(2);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
     public EClass getElkEdge() {
         return elkEdgeEClass;
     }
@@ -443,6 +489,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdge_ContainingNode() {
         return (EReference)elkEdgeEClass.getEStructuralFeatures().get(0);
     }
@@ -452,6 +499,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdge_Sources() {
         return (EReference)elkEdgeEClass.getEStructuralFeatures().get(1);
     }
@@ -461,6 +509,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdge_Targets() {
         return (EReference)elkEdgeEClass.getEStructuralFeatures().get(2);
     }
@@ -470,6 +519,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdge_Sections() {
         return (EReference)elkEdgeEClass.getEStructuralFeatures().get(3);
     }
@@ -479,6 +529,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdge_Hyperedge() {
         return (EAttribute)elkEdgeEClass.getEStructuralFeatures().get(4);
     }
@@ -488,6 +539,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdge_Hierarchical() {
         return (EAttribute)elkEdgeEClass.getEStructuralFeatures().get(5);
     }
@@ -497,6 +549,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdge_Selfloop() {
         return (EAttribute)elkEdgeEClass.getEStructuralFeatures().get(6);
     }
@@ -506,6 +559,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdge_Connected() {
         return (EAttribute)elkEdgeEClass.getEStructuralFeatures().get(7);
     }
@@ -515,6 +569,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkBendPoint() {
         return elkBendPointEClass;
     }
@@ -524,6 +579,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkBendPoint_X() {
         return (EAttribute)elkBendPointEClass.getEStructuralFeatures().get(0);
     }
@@ -533,6 +589,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkBendPoint_Y() {
         return (EAttribute)elkBendPointEClass.getEStructuralFeatures().get(1);
     }
@@ -542,6 +599,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkEdgeSection() {
         return elkEdgeSectionEClass;
     }
@@ -551,6 +609,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdgeSection_StartX() {
         return (EAttribute)elkEdgeSectionEClass.getEStructuralFeatures().get(0);
     }
@@ -560,6 +619,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdgeSection_StartY() {
         return (EAttribute)elkEdgeSectionEClass.getEStructuralFeatures().get(1);
     }
@@ -569,6 +629,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdgeSection_EndX() {
         return (EAttribute)elkEdgeSectionEClass.getEStructuralFeatures().get(2);
     }
@@ -578,6 +639,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdgeSection_EndY() {
         return (EAttribute)elkEdgeSectionEClass.getEStructuralFeatures().get(3);
     }
@@ -587,6 +649,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdgeSection_BendPoints() {
         return (EReference)elkEdgeSectionEClass.getEStructuralFeatures().get(4);
     }
@@ -596,6 +659,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdgeSection_Parent() {
         return (EReference)elkEdgeSectionEClass.getEStructuralFeatures().get(5);
     }
@@ -605,6 +669,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdgeSection_OutgoingShape() {
         return (EReference)elkEdgeSectionEClass.getEStructuralFeatures().get(6);
     }
@@ -614,6 +679,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdgeSection_IncomingShape() {
         return (EReference)elkEdgeSectionEClass.getEStructuralFeatures().get(7);
     }
@@ -623,6 +689,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdgeSection_OutgoingSections() {
         return (EReference)elkEdgeSectionEClass.getEStructuralFeatures().get(8);
     }
@@ -632,6 +699,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EReference getElkEdgeSection_IncomingSections() {
         return (EReference)elkEdgeSectionEClass.getEStructuralFeatures().get(9);
     }
@@ -641,6 +709,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkEdgeSection_Identifier() {
         return (EAttribute)elkEdgeSectionEClass.getEStructuralFeatures().get(10);
     }
@@ -650,6 +719,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EClass getElkPropertyToValueMapEntry() {
         return elkPropertyToValueMapEntryEClass;
     }
@@ -659,6 +729,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkPropertyToValueMapEntry_Key() {
         return (EAttribute)elkPropertyToValueMapEntryEClass.getEStructuralFeatures().get(0);
     }
@@ -668,6 +739,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EAttribute getElkPropertyToValueMapEntry_Value() {
         return (EAttribute)elkPropertyToValueMapEntryEClass.getEStructuralFeatures().get(1);
     }
@@ -677,6 +749,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getIProperty() {
         return iPropertyEDataType;
     }
@@ -686,6 +759,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EDataType getPropertyValue() {
         return propertyValueEDataType;
     }
@@ -695,6 +769,7 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkGraphFactory getElkGraphFactory() {
         return (ElkGraphFactory)getEFactoryInstance();
     }
@@ -750,6 +825,8 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
 
         elkPortEClass = createEClass(ELK_PORT);
         createEReference(elkPortEClass, ELK_PORT__PARENT);
+        createEReference(elkPortEClass, ELK_PORT__SUB_PORTS);
+        createEReference(elkPortEClass, ELK_PORT__PARENT_PORT);
 
         elkEdgeEClass = createEClass(ELK_EDGE);
         createEReference(elkEdgeEClass, ELK_EDGE__CONTAINING_NODE);
@@ -906,6 +983,8 @@ public class ElkGraphPackageImpl extends EPackageImpl implements ElkGraphPackage
 
         initEClass(elkPortEClass, ElkPort.class, "ElkPort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getElkPort_Parent(), this.getElkNode(), this.getElkNode_Ports(), "parent", null, 0, 1, ElkPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getElkPort_SubPorts(), this.getElkPort(), this.getElkPort_ParentPort(), "subPorts", null, 0, -1, ElkPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        initEReference(getElkPort_ParentPort(), this.getElkPort(), this.getElkPort_SubPorts(), "parentPort", null, 0, 1, ElkPort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         initEClass(elkEdgeEClass, ElkEdge.class, "ElkEdge", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEReference(getElkEdge_ContainingNode(), this.getElkNode(), this.getElkNode_ContainedEdges(), "containingNode", null, 0, 1, ElkEdge.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

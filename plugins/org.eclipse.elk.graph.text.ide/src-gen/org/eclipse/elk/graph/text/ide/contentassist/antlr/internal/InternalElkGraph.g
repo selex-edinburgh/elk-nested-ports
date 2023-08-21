@@ -563,6 +563,27 @@ finally {
 	restoreStackSize(stackSize);
 }
 
+rule__ElkPort__Alternatives_2_3
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getElkPortAccess().getLabelsAssignment_2_3_0()); }
+		(rule__ElkPort__LabelsAssignment_2_3_0)
+		{ after(grammarAccess.getElkPortAccess().getLabelsAssignment_2_3_0()); }
+	)
+	|
+	(
+		{ before(grammarAccess.getElkPortAccess().getSubPortsAssignment_2_3_1()); }
+		(rule__ElkPort__SubPortsAssignment_2_3_1)
+		{ after(grammarAccess.getElkPortAccess().getSubPortsAssignment_2_3_1()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
 rule__EdgeLayout__Alternatives_2
 	@init {
 		int stackSize = keepStackSize();
@@ -1575,9 +1596,9 @@ rule__ElkPort__Group_2__3__Impl
 	}
 :
 (
-	{ before(grammarAccess.getElkPortAccess().getLabelsAssignment_2_3()); }
-	(rule__ElkPort__LabelsAssignment_2_3)*
-	{ after(grammarAccess.getElkPortAccess().getLabelsAssignment_2_3()); }
+	{ before(grammarAccess.getElkPortAccess().getAlternatives_2_3()); }
+	(rule__ElkPort__Alternatives_2_3)*
+	{ after(grammarAccess.getElkPortAccess().getAlternatives_2_3()); }
 )
 ;
 finally {
@@ -5316,15 +5337,30 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ElkPort__LabelsAssignment_2_3
+rule__ElkPort__LabelsAssignment_2_3_0
 	@init {
 		int stackSize = keepStackSize();
 	}
 :
 	(
-		{ before(grammarAccess.getElkPortAccess().getLabelsElkLabelParserRuleCall_2_3_0()); }
+		{ before(grammarAccess.getElkPortAccess().getLabelsElkLabelParserRuleCall_2_3_0_0()); }
 		ruleElkLabel
-		{ after(grammarAccess.getElkPortAccess().getLabelsElkLabelParserRuleCall_2_3_0()); }
+		{ after(grammarAccess.getElkPortAccess().getLabelsElkLabelParserRuleCall_2_3_0_0()); }
+	)
+;
+finally {
+	restoreStackSize(stackSize);
+}
+
+rule__ElkPort__SubPortsAssignment_2_3_1
+	@init {
+		int stackSize = keepStackSize();
+	}
+:
+	(
+		{ before(grammarAccess.getElkPortAccess().getSubPortsElkPortParserRuleCall_2_3_1_0()); }
+		ruleElkPort
+		{ after(grammarAccess.getElkPortAccess().getSubPortsElkPortParserRuleCall_2_3_1_0()); }
 	)
 ;
 finally {

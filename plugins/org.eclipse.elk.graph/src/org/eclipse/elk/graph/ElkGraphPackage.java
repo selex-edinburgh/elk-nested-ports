@@ -684,13 +684,31 @@ public interface ElkGraphPackage extends EPackage {
     int ELK_PORT__PARENT = ELK_CONNECTABLE_SHAPE_FEATURE_COUNT + 0;
 
     /**
+     * The feature id for the '<em><b>Sub Ports</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ELK_PORT__SUB_PORTS = ELK_CONNECTABLE_SHAPE_FEATURE_COUNT + 1;
+
+    /**
+     * The feature id for the '<em><b>Parent Port</b></em>' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int ELK_PORT__PARENT_PORT = ELK_CONNECTABLE_SHAPE_FEATURE_COUNT + 2;
+
+    /**
      * The number of structural features of the '<em>Elk Port</em>' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      * @ordered
      */
-    int ELK_PORT_FEATURE_COUNT = ELK_CONNECTABLE_SHAPE_FEATURE_COUNT + 1;
+    int ELK_PORT_FEATURE_COUNT = ELK_CONNECTABLE_SHAPE_FEATURE_COUNT + 3;
 
     /**
      * The meta object id for the '{@link org.eclipse.elk.graph.impl.ElkEdgeImpl <em>Elk Edge</em>}' class.
@@ -1302,6 +1320,28 @@ public interface ElkGraphPackage extends EPackage {
     EReference getElkPort_Parent();
 
     /**
+     * Returns the meta object for the containment reference list '{@link org.eclipse.elk.graph.ElkPort#getSubPorts <em>Sub Ports</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the containment reference list '<em>Sub Ports</em>'.
+     * @see org.eclipse.elk.graph.ElkPort#getSubPorts()
+     * @see #getElkPort()
+     * @generated
+     */
+    EReference getElkPort_SubPorts();
+
+    /**
+     * Returns the meta object for the container reference '{@link org.eclipse.elk.graph.ElkPort#getParentPort <em>Parent Port</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the container reference '<em>Parent Port</em>'.
+     * @see org.eclipse.elk.graph.ElkPort#getParentPort()
+     * @see #getElkPort()
+     * @generated
+     */
+    EReference getElkPort_ParentPort();
+
+    /**
      * Returns the meta object for class '{@link org.eclipse.elk.graph.ElkEdge <em>Elk Edge</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1855,6 +1895,22 @@ public interface ElkGraphPackage extends EPackage {
          * @generated
          */
         EReference ELK_PORT__PARENT = eINSTANCE.getElkPort_Parent();
+
+        /**
+         * The meta object literal for the '<em><b>Sub Ports</b></em>' containment reference list feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ELK_PORT__SUB_PORTS = eINSTANCE.getElkPort_SubPorts();
+
+        /**
+         * The meta object literal for the '<em><b>Parent Port</b></em>' container reference feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EReference ELK_PORT__PARENT_PORT = eINSTANCE.getElkPort_ParentPort();
 
         /**
          * The meta object literal for the '{@link org.eclipse.elk.graph.impl.ElkEdgeImpl <em>Elk Edge</em>}' class.

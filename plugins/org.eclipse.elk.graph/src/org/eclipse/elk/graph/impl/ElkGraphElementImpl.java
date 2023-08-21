@@ -92,6 +92,7 @@ public abstract class ElkGraphElementImpl extends EMapPropertyHolderImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkLabel> getLabels() {
         if (labels == null) {
             labels = new EObjectContainmentWithInverseEList<ElkLabel>(ElkLabel.class, this, ElkGraphPackage.ELK_GRAPH_ELEMENT__LABELS, ElkGraphPackage.ELK_LABEL__PARENT);
@@ -104,6 +105,7 @@ public abstract class ElkGraphElementImpl extends EMapPropertyHolderImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getIdentifier() {
         return identifier;
     }
@@ -113,6 +115,7 @@ public abstract class ElkGraphElementImpl extends EMapPropertyHolderImpl impleme
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIdentifier(String newIdentifier) {
         String oldIdentifier = identifier;
         identifier = newIdentifier;
@@ -228,7 +231,7 @@ public abstract class ElkGraphElementImpl extends EMapPropertyHolderImpl impleme
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (identifier: ");
         result.append(identifier);
         result.append(')');

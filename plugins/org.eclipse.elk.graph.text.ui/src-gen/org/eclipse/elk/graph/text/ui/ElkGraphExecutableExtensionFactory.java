@@ -13,6 +13,7 @@ import com.google.inject.Injector;
 import org.eclipse.elk.graph.text.ui.internal.TextActivator;
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;
+import org.osgi.framework.FrameworkUtil;
 
 /**
  * This class was generated. Customizations should only happen in a newly
@@ -22,12 +23,13 @@ public class ElkGraphExecutableExtensionFactory extends AbstractGuiceAwareExecut
 
 	@Override
 	protected Bundle getBundle() {
-		return TextActivator.getInstance().getBundle();
+		return FrameworkUtil.getBundle(TextActivator.class);
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return TextActivator.getInstance().getInjector(TextActivator.ORG_ECLIPSE_ELK_GRAPH_TEXT_ELKGRAPH);
+		TextActivator activator = TextActivator.getInstance();
+		return activator != null ? activator.getInjector(TextActivator.ORG_ECLIPSE_ELK_GRAPH_TEXT_ELKGRAPH) : null;
 	}
-	
+
 }

@@ -144,7 +144,7 @@ public interface ElkShape extends ElkGraphElement {
      * <!-- begin-model-doc -->
      * Convenience method to set the shape's width and height simultaneously by calling their respective set methods.
      * <!-- end-model-doc -->
-     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='setWidth(width);\nsetHeight(height);'"
+     * @model
      * @generated
      */
     void setDimensions(double width, double height);
@@ -155,7 +155,7 @@ public interface ElkShape extends ElkGraphElement {
      * <!-- begin-model-doc -->
      * Convenience method to set the shape's x and y coordinates simultaneously by calling their respective set methods.
      * <!-- end-model-doc -->
-     * @model annotation="http://www.eclipse.org/emf/2002/GenModel body='setX(x);\nsetY(y);'"
+     * @model
      * @generated
      */
     void setLocation(double x, double y);

@@ -98,6 +98,7 @@ public class ElkBendPointImpl extends MinimalEObjectImpl.Container implements El
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getX() {
         return x;
     }
@@ -107,6 +108,7 @@ public class ElkBendPointImpl extends MinimalEObjectImpl.Container implements El
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setX(double newX) {
         double oldX = x;
         x = newX;
@@ -119,6 +121,7 @@ public class ElkBendPointImpl extends MinimalEObjectImpl.Container implements El
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getY() {
         return y;
     }
@@ -128,6 +131,7 @@ public class ElkBendPointImpl extends MinimalEObjectImpl.Container implements El
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setY(double newY) {
         double oldY = y;
         y = newY;
@@ -140,6 +144,7 @@ public class ElkBendPointImpl extends MinimalEObjectImpl.Container implements El
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void set(final double x, final double y) {
         setX(x);
         setY(y);
@@ -222,7 +227,7 @@ public class ElkBendPointImpl extends MinimalEObjectImpl.Container implements El
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (x: ");
         result.append(x);
         result.append(", y: ");

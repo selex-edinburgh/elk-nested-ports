@@ -84,6 +84,7 @@ public abstract class ElkConnectableShapeImpl extends ElkShapeImpl implements El
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkEdge> getOutgoingEdges() {
         if (outgoingEdges == null) {
             outgoingEdges = new EObjectWithInverseResolvingEList.ManyInverse<ElkEdge>(ElkEdge.class, this, ElkGraphPackage.ELK_CONNECTABLE_SHAPE__OUTGOING_EDGES, ElkGraphPackage.ELK_EDGE__SOURCES);
@@ -96,6 +97,7 @@ public abstract class ElkConnectableShapeImpl extends ElkShapeImpl implements El
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkEdge> getIncomingEdges() {
         if (incomingEdges == null) {
             incomingEdges = new EObjectWithInverseResolvingEList.ManyInverse<ElkEdge>(ElkEdge.class, this, ElkGraphPackage.ELK_CONNECTABLE_SHAPE__INCOMING_EDGES, ElkGraphPackage.ELK_EDGE__TARGETS);

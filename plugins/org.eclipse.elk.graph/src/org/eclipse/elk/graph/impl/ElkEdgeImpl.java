@@ -16,6 +16,7 @@ import org.eclipse.elk.graph.ElkEdge;
 import org.eclipse.elk.graph.ElkEdgeSection;
 import org.eclipse.elk.graph.ElkGraphPackage;
 import org.eclipse.elk.graph.ElkNode;
+import org.eclipse.elk.graph.ElkPort;
 import org.eclipse.elk.graph.util.ElkGraphUtil;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -146,6 +147,7 @@ public class ElkEdgeImpl extends ElkGraphElementImpl implements ElkEdge {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkNode getContainingNode() {
         if (eContainerFeatureID() != ElkGraphPackage.ELK_EDGE__CONTAINING_NODE) return null;
         return (ElkNode)eInternalContainer();
@@ -166,6 +168,7 @@ public class ElkEdgeImpl extends ElkGraphElementImpl implements ElkEdge {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setContainingNode(ElkNode newContainingNode) {
         if (newContainingNode != eInternalContainer() || (eContainerFeatureID() != ElkGraphPackage.ELK_EDGE__CONTAINING_NODE && newContainingNode != null)) {
             if (EcoreUtil.isAncestor(this, newContainingNode))
@@ -187,6 +190,7 @@ public class ElkEdgeImpl extends ElkGraphElementImpl implements ElkEdge {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkConnectableShape> getSources() {
         if (sources == null) {
             sources = new EObjectWithInverseResolvingEList.ManyInverse<ElkConnectableShape>(ElkConnectableShape.class, this, ElkGraphPackage.ELK_EDGE__SOURCES, ElkGraphPackage.ELK_CONNECTABLE_SHAPE__OUTGOING_EDGES);
@@ -199,6 +203,7 @@ public class ElkEdgeImpl extends ElkGraphElementImpl implements ElkEdge {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkConnectableShape> getTargets() {
         if (targets == null) {
             targets = new EObjectWithInverseResolvingEList.ManyInverse<ElkConnectableShape>(ElkConnectableShape.class, this, ElkGraphPackage.ELK_EDGE__TARGETS, ElkGraphPackage.ELK_CONNECTABLE_SHAPE__INCOMING_EDGES);
@@ -211,6 +216,7 @@ public class ElkEdgeImpl extends ElkGraphElementImpl implements ElkEdge {
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkEdgeSection> getSections() {
         if (sections == null) {
             sections = new EObjectContainmentWithInverseEList<ElkEdgeSection>(ElkEdgeSection.class, this, ElkGraphPackage.ELK_EDGE__SECTIONS, ElkGraphPackage.ELK_EDGE_SECTION__PARENT);
@@ -239,6 +245,13 @@ public class ElkEdgeImpl extends ElkGraphElementImpl implements ElkEdge {
         
         for (ElkConnectableShape incidentShape : ElkGraphUtil.allIncidentShapes(this)) {
             // Compute representing node
+            
+            // start alfa
+            if (incidentShape.eContainer() instanceof ElkPort) {
+                return true;
+            }
+            // end alfa
+            
             ElkNode shapeNode = ElkGraphUtil.connectableShapeToNode(incidentShape);
             
             if (commonRepresentingNode == null) {

@@ -119,6 +119,7 @@ public class ElkGraphFactoryImpl extends EFactoryImpl implements ElkGraphFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkLabel createElkLabel() {
         ElkLabelImpl elkLabel = new ElkLabelImpl();
         return elkLabel;
@@ -129,6 +130,7 @@ public class ElkGraphFactoryImpl extends EFactoryImpl implements ElkGraphFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkNode createElkNode() {
         ElkNodeImpl elkNode = new ElkNodeImpl();
         return elkNode;
@@ -139,6 +141,7 @@ public class ElkGraphFactoryImpl extends EFactoryImpl implements ElkGraphFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkPort createElkPort() {
         ElkPortImpl elkPort = new ElkPortImpl();
         return elkPort;
@@ -149,6 +152,7 @@ public class ElkGraphFactoryImpl extends EFactoryImpl implements ElkGraphFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkEdge createElkEdge() {
         ElkEdgeImpl elkEdge = new ElkEdgeImpl();
         return elkEdge;
@@ -159,6 +163,7 @@ public class ElkGraphFactoryImpl extends EFactoryImpl implements ElkGraphFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkBendPoint createElkBendPoint() {
         ElkBendPointImpl elkBendPoint = new ElkBendPointImpl();
         return elkBendPoint;
@@ -169,6 +174,7 @@ public class ElkGraphFactoryImpl extends EFactoryImpl implements ElkGraphFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkEdgeSection createElkEdgeSection() {
         ElkEdgeSectionImpl elkEdgeSection = new ElkEdgeSectionImpl();
         return elkEdgeSection;
@@ -233,6 +239,7 @@ public class ElkGraphFactoryImpl extends EFactoryImpl implements ElkGraphFactory
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkGraphPackage getElkGraphPackage() {
         return (ElkGraphPackage)getEPackage();
     }

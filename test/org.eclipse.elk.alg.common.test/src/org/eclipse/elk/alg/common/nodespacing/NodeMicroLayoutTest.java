@@ -8,6 +8,7 @@
  *******************************************************************************/
 package org.eclipse.elk.alg.common.nodespacing;
 
+
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.lessThan;

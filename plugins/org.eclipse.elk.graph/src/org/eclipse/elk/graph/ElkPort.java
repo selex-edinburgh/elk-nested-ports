@@ -9,6 +9,8 @@
  */
 package org.eclipse.elk.graph;
 
+import org.eclipse.emf.common.util.EList;
+
 
 /**
  * <!-- begin-user-doc -->
@@ -24,6 +26,8 @@ package org.eclipse.elk.graph;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.elk.graph.ElkPort#getParent <em>Parent</em>}</li>
+ *   <li>{@link org.eclipse.elk.graph.ElkPort#getSubPorts <em>Sub Ports</em>}</li>
+ *   <li>{@link org.eclipse.elk.graph.ElkPort#getParentPort <em>Parent Port</em>}</li>
  * </ul>
  *
  * @see org.eclipse.elk.graph.ElkGraphPackage#getElkPort()
@@ -59,5 +63,43 @@ public interface ElkPort extends ElkConnectableShape {
      * @generated
      */
     void setParent(ElkNode value);
+
+    /**
+     * Returns the value of the '<em><b>Sub Ports</b></em>' containment reference list.
+     * The list contents are of type {@link org.eclipse.elk.graph.ElkPort}.
+     * It is bidirectional and its opposite is '{@link org.eclipse.elk.graph.ElkPort#getParentPort <em>Parent Port</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Sub Ports</em>' containment reference list.
+     * @see org.eclipse.elk.graph.ElkGraphPackage#getElkPort_SubPorts()
+     * @see org.eclipse.elk.graph.ElkPort#getParentPort
+     * @model opposite="parentPort" containment="true"
+     * @generated
+     */
+    EList<ElkPort> getSubPorts();
+
+    /**
+     * Returns the value of the '<em><b>Parent Port</b></em>' container reference.
+     * It is bidirectional and its opposite is '{@link org.eclipse.elk.graph.ElkPort#getSubPorts <em>Sub Ports</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the value of the '<em>Parent Port</em>' container reference.
+     * @see #setParentPort(ElkPort)
+     * @see org.eclipse.elk.graph.ElkGraphPackage#getElkPort_ParentPort()
+     * @see org.eclipse.elk.graph.ElkPort#getSubPorts
+     * @model opposite="subPorts" transient="false"
+     * @generated
+     */
+    ElkPort getParentPort();
+
+    /**
+     * Sets the value of the '{@link org.eclipse.elk.graph.ElkPort#getParentPort <em>Parent Port</em>}' container reference.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @param value the new value of the '<em>Parent Port</em>' container reference.
+     * @see #getParentPort()
+     * @generated
+     */
+    void setParentPort(ElkPort value);
 
 } // ElkPort

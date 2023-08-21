@@ -230,6 +230,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getStartX() {
         return startX;
     }
@@ -239,6 +240,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setStartX(double newStartX) {
         double oldStartX = startX;
         startX = newStartX;
@@ -251,6 +253,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getStartY() {
         return startY;
     }
@@ -260,6 +263,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setStartY(double newStartY) {
         double oldStartY = startY;
         startY = newStartY;
@@ -272,6 +276,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getEndX() {
         return endX;
     }
@@ -281,6 +286,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEndX(double newEndX) {
         double oldEndX = endX;
         endX = newEndX;
@@ -293,6 +299,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public double getEndY() {
         return endY;
     }
@@ -302,6 +309,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEndY(double newEndY) {
         double oldEndY = endY;
         endY = newEndY;
@@ -314,6 +322,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkBendPoint> getBendPoints() {
         if (bendPoints == null) {
             bendPoints = new EObjectContainmentEList<ElkBendPoint>(ElkBendPoint.class, this, ElkGraphPackage.ELK_EDGE_SECTION__BEND_POINTS);
@@ -326,6 +335,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkEdge getParent() {
         if (eContainerFeatureID() != ElkGraphPackage.ELK_EDGE_SECTION__PARENT) return null;
         return (ElkEdge)eInternalContainer();
@@ -346,6 +356,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setParent(ElkEdge newParent) {
         if (newParent != eInternalContainer() || (eContainerFeatureID() != ElkGraphPackage.ELK_EDGE_SECTION__PARENT && newParent != null)) {
             if (EcoreUtil.isAncestor(this, newParent))
@@ -367,6 +378,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkConnectableShape getOutgoingShape() {
         if (outgoingShape != null && outgoingShape.eIsProxy()) {
             InternalEObject oldOutgoingShape = (InternalEObject)outgoingShape;
@@ -393,6 +405,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setOutgoingShape(ElkConnectableShape newOutgoingShape) {
         ElkConnectableShape oldOutgoingShape = outgoingShape;
         outgoingShape = newOutgoingShape;
@@ -405,6 +418,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public ElkConnectableShape getIncomingShape() {
         if (incomingShape != null && incomingShape.eIsProxy()) {
             InternalEObject oldIncomingShape = (InternalEObject)incomingShape;
@@ -431,6 +445,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIncomingShape(ElkConnectableShape newIncomingShape) {
         ElkConnectableShape oldIncomingShape = incomingShape;
         incomingShape = newIncomingShape;
@@ -443,6 +458,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkEdgeSection> getOutgoingSections() {
         if (outgoingSections == null) {
             outgoingSections = new EObjectWithInverseResolvingEList.ManyInverse<ElkEdgeSection>(ElkEdgeSection.class, this, ElkGraphPackage.ELK_EDGE_SECTION__OUTGOING_SECTIONS, ElkGraphPackage.ELK_EDGE_SECTION__INCOMING_SECTIONS);
@@ -455,6 +471,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EList<ElkEdgeSection> getIncomingSections() {
         if (incomingSections == null) {
             incomingSections = new EObjectWithInverseResolvingEList.ManyInverse<ElkEdgeSection>(ElkEdgeSection.class, this, ElkGraphPackage.ELK_EDGE_SECTION__INCOMING_SECTIONS, ElkGraphPackage.ELK_EDGE_SECTION__OUTGOING_SECTIONS);
@@ -467,6 +484,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public String getIdentifier() {
         return identifier;
     }
@@ -476,6 +494,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setIdentifier(String newIdentifier) {
         String oldIdentifier = identifier;
         identifier = newIdentifier;
@@ -488,6 +507,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setStartLocation(final double x, final double y) {
         setStartX(x);
         setStartY(y);
@@ -498,6 +518,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public void setEndLocation(final double x, final double y) {
         setEndX(x);
         setEndY(y);
@@ -731,7 +752,7 @@ public class ElkEdgeSectionImpl extends EMapPropertyHolderImpl implements ElkEdg
     public String toString() {
         if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
+        StringBuilder result = new StringBuilder(super.toString());
         result.append(" (startX: ");
         result.append(startX);
         result.append(", startY: ");

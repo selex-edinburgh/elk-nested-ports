@@ -72,6 +72,7 @@ public abstract class EMapPropertyHolderImpl extends MinimalEObjectImpl.Containe
      * <!-- end-user-doc -->
      * @generated
      */
+    @Override
     public EMap<IProperty<?>, Object> getProperties() {
         if (properties == null) {
             properties = new EcoreEMap<IProperty<?>,Object>(ElkGraphPackage.Literals.ELK_PROPERTY_TO_VALUE_MAP_ENTRY, ElkPropertyToValueMapEntryImpl.class, this, ElkGraphPackage.EMAP_PROPERTY_HOLDER__PROPERTIES);
