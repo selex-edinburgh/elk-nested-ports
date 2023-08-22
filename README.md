@@ -1,5 +1,8 @@
 ## Specific Instructions for the Nested Ports version
 
+### Maven Dependencies
+Some of the the unit test projects require **Hamcrest library** (1.3.0.v20180524-2246	org.hamcrest.library). So, it needs to be installed, and the following **Eclipse Orbit** update site can be used 
+https://download.eclipse.org/tools/orbit/downloads/drops/R20230531010532/repository.
 
 ### Build
 

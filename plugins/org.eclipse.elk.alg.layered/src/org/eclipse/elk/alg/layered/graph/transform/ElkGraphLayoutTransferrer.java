@@ -32,6 +32,7 @@ import org.eclipse.elk.core.math.KVectorChain;
 import org.eclipse.elk.core.options.EdgeRouting;
 import org.eclipse.elk.core.options.PortConstraints;
 import org.eclipse.elk.core.options.PortLabelPlacement;
+import org.eclipse.elk.core.options.PortSide;
 import org.eclipse.elk.core.options.SizeConstraint;
 import org.eclipse.elk.core.options.SizeOptions;
 import org.eclipse.elk.core.util.ElkUtil;
@@ -52,32 +53,33 @@ import com.google.common.collect.Lists;
 class ElkGraphLayoutTransferrer {
 
     /**
-     * Applies the layout information contained in the given LGraph to the ElkGraph elements it was
-     * created from. All source ElkGraph elements are expected to be accessible through their LGraph
-     * counterparts through the {@link InternalProperties#ORIGIN} property.
+     * Applies the layout information contained in the given LGraph to the ElkGraph elements it was created from. All
+     * source ElkGraph elements are expected to be accessible through their LGraph counterparts through the
+     * {@link InternalProperties#ORIGIN} property.
      * 
-     * @param lgraph the LGraph whose layout information to apply.
+     * @param lgraph
+     *            the LGraph whose layout information to apply.
      */
     public void applyLayout(final LGraph lgraph) {
         Object graphOrigin = lgraph.getProperty(InternalProperties.ORIGIN);
         if (!(graphOrigin instanceof ElkNode)) {
             return;
         }
-        
+
         // The ElkNode that represents this graph in the original ElkGraph
         ElkNode parentElkNode = (ElkNode) graphOrigin;
-        
+
         // The LNode that represents this graph in the upper hierarchy level, if any
         LNode parentLNode = (LNode) lgraph.getParentNode();
-        
+
         // Get the offset to be added to all coordinates
         KVector offset = new KVector(lgraph.getOffset());
-        
+
         // Adjust offset (and with it the positions) by the requested padding
         LPadding lPadding = lgraph.getPadding();
         offset.x += lPadding.left;
         offset.y += lPadding.top;
-        
+
         // Set node padding, if it was computed during layout
         final EnumSet<SizeOptions> sizeOptions = parentElkNode.getProperty(LayeredOptions.NODE_SIZE_OPTIONS);
         if (sizeOptions.contains(SizeOptions.COMPUTE_PADDING)) {
@@ -95,13 +97,13 @@ class ElkGraphLayoutTransferrer {
         for (LNode lnode : lgraph.getLayerlessNodes()) {
             if (representsNode(lnode)) {
                 applyNodeLayout(lnode, offset);
-                
+
             } else if (representsExternalPort(lnode) && parentLNode == null) {
                 // We have an external port here on the top-most hierarchy level of the current (possibly
                 // hierarchical) layout run; set its position
                 ElkPort elkport = (ElkPort) lnode.getProperty(InternalProperties.ORIGIN);
-                KVector portPosition = LGraphUtil.getExternalPortPosition(
-                        lgraph, lnode, elkport.getWidth(), elkport.getHeight());
+                KVector portPosition =
+                        LGraphUtil.getExternalPortPosition(lgraph, lnode, elkport.getWidth(), elkport.getHeight());
                 elkport.setLocation(portPosition.x, portPosition.y);
             }
 
@@ -110,8 +112,8 @@ class ElkGraphLayoutTransferrer {
             // correctly)
             for (LPort port : lnode.getPorts()) {
                 port.getOutgoingEdges().stream()
-                    .filter(edge -> !LGraphUtil.isDescendant(edge.getTarget().getNode(), lnode))
-                    .forEach(edge -> edgeList.add(edge));
+                        .filter(edge -> !LGraphUtil.isDescendant(edge.getTarget().getNode(), lnode))
+                        .forEach(edge -> edgeList.add(edge));
             }
         }
 
@@ -123,7 +125,7 @@ class ElkGraphLayoutTransferrer {
                         .forEach(edge -> edgeList.add(edge));
             }
         }
-        
+
         // Iterate through all edges
         EdgeRouting routing = parentElkNode.getProperty(LayeredOptions.EDGE_ROUTING);
         for (LEdge ledge : edgeList) {
@@ -132,7 +134,7 @@ class ElkGraphLayoutTransferrer {
 
         // Setup the parent node
         applyParentNodeLayout(lgraph);
-        
+
         // Process nested subgraphs
         for (LNode lnode : lgraph.getLayerlessNodes()) {
             LGraph nestedGraph = lnode.getNestedGraph();
@@ -152,25 +154,23 @@ class ElkGraphLayoutTransferrer {
      */
     private void applyNodeLayout(final LNode lnode, final KVector offset) {
         final ElkNode elknode = (ElkNode) lnode.getProperty(InternalProperties.ORIGIN);
-        
-        
+
         // Apply the nodeID and layerId that were set on the LGraph on the ElkGraph
         final int nodeID = lnode.getProperty(LayeredOptions.CROSSING_MINIMIZATION_POSITION_ID);
         final int layerID = lnode.getProperty(LayeredOptions.LAYERING_LAYER_ID);
         elknode.setProperty(LayeredOptions.CROSSING_MINIMIZATION_POSITION_ID, nodeID);
         elknode.setProperty(LayeredOptions.LAYERING_LAYER_ID, layerID);
-        
+
         // Set the node position
         elknode.setX(lnode.getPosition().x + offset.x);
         elknode.setY(lnode.getPosition().y + offset.y);
-        
+
         // Set the node size, if necessary
-        if (!elknode.getProperty(LayeredOptions.NODE_SIZE_CONSTRAINTS).isEmpty()
-                || lnode.getNestedGraph() != null
-                || (lnode.getGraph().getProperty(LayeredOptions.NODE_PLACEMENT_STRATEGY) 
-                        == NodePlacementStrategy.NETWORK_SIMPLEX 
-                    && NodeFlexibility.getNodeFlexibility(lnode).isFlexibleSizeWhereSpacePermits())) {
-            
+        if (!elknode.getProperty(LayeredOptions.NODE_SIZE_CONSTRAINTS).isEmpty() || lnode.getNestedGraph() != null
+                || (lnode.getGraph()
+                        .getProperty(LayeredOptions.NODE_PLACEMENT_STRATEGY) == NodePlacementStrategy.NETWORK_SIMPLEX
+                        && NodeFlexibility.getNodeFlexibility(lnode).isFlexibleSizeWhereSpacePermits())) {
+
             elknode.setWidth(lnode.getSize().x);
             elknode.setHeight(lnode.getSize().y);
         }
@@ -182,13 +182,17 @@ class ElkGraphLayoutTransferrer {
                 ElkPort elkport = (ElkPort) origin;
                 elkport.setLocation(lport.getPosition().x, lport.getPosition().y);
                 elkport.setProperty(LayeredOptions.PORT_SIDE, lport.getSide());
+
+                // alfa
+                setSubPortsPositions(elkport);
+
             }
         }
-        
+
         // Set node label positions, if they were not fixed
         // (that is at least one of the node or the label has a node label placement set)
         final boolean nodeHasLabelPlacement = !lnode.getProperty(LayeredOptions.NODE_LABELS_PLACEMENT).isEmpty();
-        
+
         for (LLabel llabel : lnode.getLabels()) {
             if (nodeHasLabelPlacement || !llabel.getProperty(LayeredOptions.NODE_LABELS_PLACEMENT).isEmpty()) {
                 ElkLabel elklabel = (ElkLabel) llabel.getProperty(InternalProperties.ORIGIN);
@@ -196,7 +200,7 @@ class ElkGraphLayoutTransferrer {
                 elklabel.setLocation(llabel.getPosition().x, llabel.getPosition().y);
             }
         }
-        
+
         // Set port label positions, if they were not fixed
         if (!PortLabelPlacement.isFixed(lnode.getProperty(LayeredOptions.PORT_LABELS_PLACEMENT))) {
             for (LPort lport : lnode.getPorts()) {
@@ -209,7 +213,55 @@ class ElkGraphLayoutTransferrer {
             }
         }
     }
-    
+
+    /**
+     * A method to calculate the positions of sub-ports of a port.
+     * 
+     * @param elkport
+     */
+    private void setSubPortsPositions(ElkPort elkport) {
+        if (!elkport.getSubPorts().isEmpty()) {
+
+            PortSide portSide = (PortSide) elkport.getProperties().get(LayeredOptions.PORT_SIDE);
+            double portSize = 5;
+
+            if (portSide == PortSide.WEST) {
+                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
+                    ElkPort subport = elkport.getSubPorts().get(i);
+                    double y = elkport.getY() - (portSize * (i - mid));
+                    subport.setY(y);
+                    subport.setX(elkport.getX() - portSize);
+                }
+            } else if (portSide == PortSide.EAST) {
+                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
+                    ElkPort subport = elkport.getSubPorts().get(i);
+                    double y = elkport.getY() - (portSize * (i - mid));
+                    subport.setY(y);
+                    subport.setX(elkport.getX() + portSize);
+                }
+            } else if (portSide == PortSide.NORTH) {
+                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
+                    ElkPort subport = elkport.getSubPorts().get(i);
+                    double y = elkport.getX() - (portSize * (i - mid));
+                    subport.setY(y);
+                    subport.setX(elkport.getY() - portSize);
+                }
+            } else if (portSide == PortSide.SOUTH) {
+                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
+                    ElkPort subport = elkport.getSubPorts().get(i);
+                    double y = elkport.getX() - (portSize * (i - mid));
+                    subport.setY(y);
+                    subport.setX(elkport.getY() + portSize);
+                }
+            }
+
+        }
+    }
+
     /**
      * Applies layout information computed for the given edge.
      * 
@@ -220,23 +272,22 @@ class ElkGraphLayoutTransferrer {
      * @param offset
      *            offset to add to coordinates.
      * @param additionalPadding
-     *            the additional insets that may have to be taken into account for hierarchical that go
-     *            into the bowels of their source node. These are already included in the offset, but
-     *            are required separately.
+     *            the additional insets that may have to be taken into account for hierarchical that go into the bowels
+     *            of their source node. These are already included in the offset, but are required separately.
      */
     private void applyEdgeLayout(final LEdge ledge, final EdgeRouting routing, final KVector offset,
             final LPadding additionalPadding) {
 
         ElkEdge elkedge = (ElkEdge) ledge.getProperty(InternalProperties.ORIGIN);
-        
+
         // Only the orthogonal edge routing algorithm supports self-loops. Thus, leave self-loops
         // untouched if another routing algorithm is selected.
         if (elkedge == null) {
             return;
         }
-        
+
         KVectorChain bendPoints = ledge.getBendPoints();
-        
+
         // The standard offset may need to be modified if the edge needs to end up in a coordinate system of
         // a graph in a higher hierarchy level
         KVector edgeOffset = new KVector(offset);
@@ -248,7 +299,7 @@ class ElkGraphLayoutTransferrer {
             // The external port's anchor position, relative to the node's top left corner
             LPort sourcePort = ledge.getSource();
             sourcePoint = KVector.sum(sourcePort.getPosition(), sourcePort.getAnchor());
-            
+
             // The source point will later have the passed offset added to it, which it doesn't actually
             // need, so we subtract it now (notice that the external port's position was already relative
             // to its node's top left corner, while adding the offset now would mean that it was relative
@@ -258,7 +309,7 @@ class ElkGraphLayoutTransferrer {
             sourcePoint = ledge.getSource().getAbsoluteAnchor();
         }
         bendPoints.addFirst(sourcePoint);
-        
+
         // Add the target port position to the vector chain, including additional offset
         KVector targetPoint = ledge.getTarget().getAbsoluteAnchor();
         if (ledge.getProperty(InternalProperties.TARGET_OFFSET) != null) {
@@ -268,7 +319,7 @@ class ElkGraphLayoutTransferrer {
 
         // Translate the bend points by the offset and apply the bend points
         bendPoints.offset(edgeOffset);
-        
+
         // Give the edge a proper edge section to store routing information
         ElkEdgeSection elkedgeSection = ElkGraphUtil.firstEdgeSection(elkedge, true, true);
         elkedgeSection.setIncomingShape(elkedge.getSources().get(0));
@@ -280,14 +331,12 @@ class ElkGraphLayoutTransferrer {
             ElkLabel elklabel = (ElkLabel) llabel.getProperty(InternalProperties.ORIGIN);
             elklabel.setWidth(llabel.getSize().x);
             elklabel.setHeight(llabel.getSize().y);
-            elklabel.setLocation(llabel.getPosition().x + edgeOffset.x,
-                                 llabel.getPosition().y + edgeOffset.y);
-            
-            elklabel.setProperty(
-                    LabelDummySwitcher.INCLUDE_LABEL,
+            elklabel.setLocation(llabel.getPosition().x + edgeOffset.x, llabel.getPosition().y + edgeOffset.y);
+
+            elklabel.setProperty(LabelDummySwitcher.INCLUDE_LABEL,
                     llabel.getProperty(LabelDummySwitcher.INCLUDE_LABEL));
         }
-        
+
         // Copy junction points
         KVectorChain junctionPoints = ledge.getProperty(LayeredOptions.JUNCTION_POINTS);
         if (junctionPoints != null) {
@@ -306,14 +355,14 @@ class ElkGraphLayoutTransferrer {
             elkedge.setProperty(LayeredOptions.EDGE_ROUTING, null);
         }
     }
-    
+
     /** A zero vector to avoid having to instantiate new empty vectors for each edge. */
     private static final KVector ZERO_OFFSET = new KVector();
-    
+
     /**
-     * If the coordinates of an edge must be relative to a different node than they are in the algorithm, this
-     * method returns the correct offset to translate from the algorithm's coordinate system to the necessary
-     * target coordinate system.
+     * If the coordinates of an edge must be relative to a different node than they are in the algorithm, this method
+     * returns the correct offset to translate from the algorithm's coordinate system to the necessary target coordinate
+     * system.
      * 
      * @return the offset vector, which may simply be zero (but not {@code null}). Must not be modified.
      */
@@ -321,23 +370,22 @@ class ElkGraphLayoutTransferrer {
         LGraph targetCoordinateSystem = ledge.getProperty(InternalProperties.COORDINATE_SYSTEM_ORIGIN);
         if (targetCoordinateSystem != null) {
             KVector result = new KVector();
-            
+
             // Edges this method is called on are always in the coordinate system of their source
             LGraph currentGraph = ledge.getSource().getNode().getGraph();
-            
+
             while (currentGraph != targetCoordinateSystem) {
                 // The current graph should always have an upper level if we have not reached the target graph yet;
                 LNode representingNode = currentGraph.getParentNode();
                 currentGraph = representingNode.getGraph();
-                
-                result.add(representingNode.getPosition())
-                      .add(currentGraph.getOffset())
-                      .add(currentGraph.getPadding().left, currentGraph.getPadding().top);
+
+                result.add(representingNode.getPosition()).add(currentGraph.getOffset())
+                        .add(currentGraph.getPadding().left, currentGraph.getPadding().top);
             }
-            
+
             return result;
         }
-        
+
         // No coordinate system conversion is required
         return ZERO_OFFSET;
     }
@@ -350,36 +398,26 @@ class ElkGraphLayoutTransferrer {
      */
     private void applyParentNodeLayout(final LGraph lgraph) {
         ElkNode elknode = (ElkNode) lgraph.getProperty(InternalProperties.ORIGIN);
-        
+
         boolean sizeConstraintsIncludedPortLabels =
                 elknode.getProperty(LayeredOptions.NODE_SIZE_CONSTRAINTS).contains(SizeConstraint.PORT_LABELS);
 
         if (lgraph.getParentNode() == null) {
             Set<GraphProperties> graphProps = lgraph.getProperty(InternalProperties.GRAPH_PROPERTIES);
             KVector actualGraphSize = lgraph.getActualSize();
-            
+
             if (graphProps.contains(GraphProperties.EXTERNAL_PORTS)) {
                 // Ports have positions assigned, the graph's size is final
                 elknode.setProperty(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_POS);
-                ElkUtil.resizeNode(
-                        elknode,
-                        actualGraphSize.x,
-                        actualGraphSize.y,
-                        false,
-                        true);
+                ElkUtil.resizeNode(elknode, actualGraphSize.x, actualGraphSize.y, false, true);
             } else {
                 // Ports have not been positioned yet - leave this for next layouter
                 if (!elknode.getProperty(LayeredOptions.NODE_SIZE_FIXED_GRAPH_SIZE)) {
-                    ElkUtil.resizeNode(
-                            elknode,
-                            actualGraphSize.x,
-                            actualGraphSize.y,
-                            true,
-                            true);
+                    ElkUtil.resizeNode(elknode, actualGraphSize.x, actualGraphSize.y, true, true);
                 }
             }
         }
-        
+
         // Set the size constraints. Thing is, if we always set the size constraints to fixed, we might remove a
         // PORT_LABELS constraints that was formerly present. This in turn will cause ports to be placed without
         // consideration for their labels.
@@ -389,18 +427,17 @@ class ElkGraphLayoutTransferrer {
             elknode.setProperty(LayeredOptions.NODE_SIZE_CONSTRAINTS, SizeConstraint.fixed());
         }
     }
-    
-    
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Utility Methods
-    
+
     /**
      * Checks if the given node represents a node in the original ELK graph as well.
      */
     private static boolean representsNode(final LNode lnode) {
         return lnode.getProperty(InternalProperties.ORIGIN) instanceof ElkNode;
     }
-    
+
     /**
      * Checks if the given node represents an external port in the original ELK graph.
      */

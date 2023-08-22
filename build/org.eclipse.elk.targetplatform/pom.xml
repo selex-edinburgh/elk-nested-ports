@@ -8,29 +8,29 @@
   SPDX-License-Identifier: EPL-2.0
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	<modelVersion>4.0.0</modelVersion>
+	
+	<version>0.8.1.np</version>
+	<artifactId>org.eclipse.elk.targetplatform</artifactId>
+	<packaging>eclipse-target-definition</packaging>
+	<name>ELK Target Platform</name>
 
-  <version>0.8.1.np</version>
-  <artifactId>org.eclipse.elk.targetplatform</artifactId>
-  <packaging>eclipse-target-definition</packaging>
-  <name>ELK Target Platform</name>
+	<parent>
+		<groupId>org.eclipse.elk</groupId>
+		<artifactId>parent</artifactId>
+		<version>0.8.1.np</version>
+		<relativePath>../pom.xml</relativePath>
+	</parent>
 
-  <parent>
-    <groupId>org.eclipse.elk</groupId>
-    <artifactId>parent</artifactId>
-    <version>0.8.1.np</version>
-    <relativePath>../pom.xml</relativePath>
-  </parent>
-
-  <build>
-    <plugins>
-      <!-- Don't publish this artifact to Maven repositories. -->
-      <plugin>
-        <artifactId>maven-deploy-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+	<build>
+		<plugins>
+			<!-- Don't publish this artifact to Maven repositories. -->
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
