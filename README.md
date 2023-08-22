@@ -1,3 +1,40 @@
+## Specific Instructions for the Nested Ports version
+
+
+### Build
+
+Download the `elk-nested-ports` project from https://github.com/selex-edinburgh/elk-nested-ports or clone it using the command below:
+
+```
+git clone https://github.com/selex-edinburgh/elk-nested-ports.git
+```
+Change directory into the `build` directory inside the `elk-nested-ports` project directory.
+```
+cd elk-nested-ports/build
+```
+Execute the following command to build.
+```
+mvn build package
+```
+
+### Unit Tests
+Download the `elk-models` project from https://github.com/eclipse/elk-models or clone it using the command below:
+```
+git clone https://github.com/eclipse/elk-models.git
+```
+We need the models inside the projects to run the unit test tests successfully. So, put the project directory at **the same directory level** as the `elk-nested-ports` directory.
+
+Change directory to the `build` directory contained inside the main `elk-nested-ports` directory.
+```
+cd elk-nested-ports/build
+```
+Run the following command to run the unit tests.
+```l
+mvn --define elk.metadata.documentation.outputPath=../docs --define tests.paths.elk-repo=../tests --define tests.paths.models-repo=../../../elk-models clean integration-test
+```
+If everything is okay, all unit tests should be successful.
+
+## Elk
 <p align="center">
   <img src="https://raw.githubusercontent.com/eclipse/elk/master/docs/static/img/elk_with_text.svg?sanitize=true" height="150"> 
 </p>
