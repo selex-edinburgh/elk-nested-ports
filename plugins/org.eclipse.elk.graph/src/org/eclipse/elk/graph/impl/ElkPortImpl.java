@@ -80,13 +80,13 @@ public class ElkPortImpl extends ElkConnectableShapeImpl implements ElkPort {
     @Override
     public ElkNode getParent() {
 
-        if (this.eContainerFeatureID() != ElkGraphPackage.ELK_PORT__PARENT)
-            return null;
-
+       
         ElkPortImpl currentPort = this;
         while (currentPort.eInternalContainer() instanceof ElkPort) {
             currentPort = (ElkPortImpl) eInternalContainer();
         }
+        if (currentPort.eContainerFeatureID() != ElkGraphPackage.ELK_PORT__PARENT)
+            return null;
         return (ElkNode) currentPort.eInternalContainer();
     }
 

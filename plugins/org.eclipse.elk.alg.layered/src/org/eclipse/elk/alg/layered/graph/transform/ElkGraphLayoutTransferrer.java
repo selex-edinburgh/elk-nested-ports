@@ -182,10 +182,6 @@ class ElkGraphLayoutTransferrer {
                 ElkPort elkport = (ElkPort) origin;
                 elkport.setLocation(lport.getPosition().x, lport.getPosition().y);
                 elkport.setProperty(LayeredOptions.PORT_SIDE, lport.getSide());
-
-                // alfa
-                setSubPortsPositions(elkport);
-
             }
         }
 
@@ -214,53 +210,7 @@ class ElkGraphLayoutTransferrer {
         }
     }
 
-    /**
-     * A method to calculate the positions of sub-ports of a port.
-     * 
-     * @param elkport
-     */
-    private void setSubPortsPositions(ElkPort elkport) {
-        if (!elkport.getSubPorts().isEmpty()) {
-
-            PortSide portSide = (PortSide) elkport.getProperties().get(LayeredOptions.PORT_SIDE);
-            double portSize = 5;
-
-            if (portSide == PortSide.WEST) {
-                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-                    ElkPort subport = elkport.getSubPorts().get(i);
-                    double y = elkport.getY() - (portSize * (i - mid));
-                    subport.setY(y);
-                    subport.setX(elkport.getX() - portSize);
-                }
-            } else if (portSide == PortSide.EAST) {
-                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-                    ElkPort subport = elkport.getSubPorts().get(i);
-                    double y = elkport.getY() - (portSize * (i - mid));
-                    subport.setY(y);
-                    subport.setX(elkport.getX() + portSize);
-                }
-            } else if (portSide == PortSide.NORTH) {
-                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-                    ElkPort subport = elkport.getSubPorts().get(i);
-                    double y = elkport.getX() - (portSize * (i - mid));
-                    subport.setY(y);
-                    subport.setX(elkport.getY() - portSize);
-                }
-            } else if (portSide == PortSide.SOUTH) {
-                double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-                for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-                    ElkPort subport = elkport.getSubPorts().get(i);
-                    double y = elkport.getX() - (portSize * (i - mid));
-                    subport.setY(y);
-                    subport.setX(elkport.getY() + portSize);
-                }
-            }
-
-        }
-    }
+    
 
     /**
      * Applies layout information computed for the given edge.

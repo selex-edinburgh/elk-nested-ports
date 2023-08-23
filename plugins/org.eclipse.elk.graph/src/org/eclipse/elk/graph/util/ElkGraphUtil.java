@@ -107,6 +107,22 @@ public final class ElkGraphUtil {
 
         return port;
     }
+    
+    /**
+     * Creates a new port for the given parent port.
+     *
+     * @param parent the parent port. May be {@code null}, in which case the new port is not added to anything.
+     * @return the new port.
+     */
+    public static ElkPort createSubPort(final ElkPort parent) {
+        ElkPort port = ElkGraphFactory.eINSTANCE.createElkPort();
+
+        if (parent != null) {
+            port.setParentPort(parent);
+        }
+
+        return port;
+    }
 
     /**
      * Creates a new label for the given graph element.
