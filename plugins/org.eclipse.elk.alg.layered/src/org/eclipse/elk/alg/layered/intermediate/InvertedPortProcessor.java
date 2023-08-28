@@ -114,6 +114,7 @@ public final class InvertedPortProcessor implements ILayoutProcessor<LGraph> {
                 }
                 
                 // Look for input ports on the right side
+                //Alfa
                 Iterable<LPort> portsA = node.getPorts(PortType.INPUT, PortSide.EAST);
                 for (LPort port : node.getPorts(PortType.INPUT, PortSide.EAST)) {
                     // For every edge going into this port, insert dummy nodes (do this using
@@ -128,6 +129,7 @@ public final class InvertedPortProcessor implements ILayoutProcessor<LGraph> {
                 }
                 
                 // Look for ports on the left side connected to edges going to higher layers
+                // Alfa
                 Iterable<LPort> portsB = node.getPorts(PortType.OUTPUT, PortSide.WEST);
                 for (LPort port : node.getPorts(PortType.OUTPUT, PortSide.WEST)) {
                     // For every edge going out of this port, insert dummy nodes (do this using

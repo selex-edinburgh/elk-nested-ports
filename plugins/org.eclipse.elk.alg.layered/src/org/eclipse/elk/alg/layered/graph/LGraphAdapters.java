@@ -148,6 +148,10 @@ public final class LGraphAdapters {
             this.element = element;
         }
         
+        public T getElement() {
+            return element;
+        }
+        
 
         @Override
         public KVector getSize() {
@@ -196,6 +200,8 @@ public final class LGraphAdapters {
      * Adapter for {@link LGraph}s.
      */
     public static final class LGraphAdapter implements GraphAdapter<LGraph> {
+        
+        
         // CHECKSTYLEOFF VisibilityModifier
         /** The wrapped element. */
         protected final LGraph element;
@@ -231,7 +237,7 @@ public final class LGraphAdapters {
             this.transparentCommentNodes = transparentCommentNodes;
             this.nodeFilter = nodeFilter;
         }
-
+        
         @Override
         public KVector getSize() {
             return element.getSize();
@@ -338,7 +344,6 @@ public final class LGraphAdapters {
             this.transparentNorthSouthEdges = transparentNorthSouthEdges;
         }
         
-
         @Override
         public GraphAdapter<?> getGraph() {
             return parentGraphAdapter;
@@ -391,7 +396,7 @@ public final class LGraphAdapters {
                 Collections.sort(element.getPorts(), (Comparator<LPort>) comparator);
             }
         }
-
+        
         @Override
         public boolean isCompoundNode() {
             return element.getProperty(InternalProperties.COMPOUND_NODE);
@@ -441,7 +446,8 @@ public final class LGraphAdapters {
          * north/south port dummies.
          */
         private boolean transparentNorthSouthEdges;
-
+        
+        private LPortAdapter parentPortAdapter;
         /**
          * Creates a new adapter for the given port.
          * 
@@ -454,6 +460,15 @@ public final class LGraphAdapters {
         LPortAdapter(final LPort element, final boolean transparentNorthSouthEdges) {
             super(element);
             this.transparentNorthSouthEdges = transparentNorthSouthEdges;
+            if (element.getParentPort() instanceof LPort) {
+                parentPortAdapter = new LPortAdapter(element.getParentPort(), transparentNorthSouthEdges);
+            }
+            
+        }
+        
+        @Override
+        public LPort getElement() {
+            return element;
         }
         
 
@@ -532,6 +547,15 @@ public final class LGraphAdapters {
         @Override
         public boolean hasCompoundConnections() {
             return element.getProperty(InternalProperties.INSIDE_CONNECTIONS);
+        }
+
+        /* (non-Javadoc)
+         * @see org.eclipse.elk.core.util.adapters.GraphAdapters.PortAdapter#getParentPortAdapter()
+         */
+        @Override
+        public PortAdapter<LPort> getParentPortAdapter() {
+            // TODO Auto-generated method stub
+            return parentPortAdapter;
         }
     }
 

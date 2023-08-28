@@ -36,7 +36,6 @@ public final class LayeredLayoutProvider extends AbstractLayoutProvider implemen
     /** the layout algorithm used for regular layout runs. */
     private final ElkLayered elkLayered = new ElkLayered();
 
-
     ///////////////////////////////////////////////////////////////////////////////
     // Regular Layout
 
@@ -55,25 +54,26 @@ public final class LayeredLayoutProvider extends AbstractLayoutProvider implemen
             // Only the top-level graph is processed
             elkLayered.doLayout(layeredGraph, progressMonitor);
         }
-        
+
         if (!progressMonitor.isCanceled()) {
             // Apply the layout results to the original graph
             graphTransformer.applyLayout(layeredGraph);
         }
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////
     // Layout Testing
-    
+
     /**
-     * Import the given KGraph and return a test execution state prepared for a test run with the
-     * resulting {@link LGraph}. The layout test run methods can immediately be called on the
-     * returned object.
+     * Import the given KGraph and return a test execution state prepared for a test run with the resulting
+     * {@link LGraph}. The layout test run methods can immediately be called on the returned object.
      * 
-     * <p><strong>Note:</strong> This method does not apply the layout back to the original KGraph!</p>
+     * <p>
+     * <strong>Note:</strong> This method does not apply the layout back to the original KGraph!
+     * </p>
      * 
-     * @param elkgraph the KGraph to be used for the layout test run.
+     * @param elkgraph
+     *            the KGraph to be used for the layout test run.
      * @return an initialized test execution state
      */
     public ElkLayered.TestExecutionState startLayoutTest(final ElkNode elkgraph) {
@@ -82,11 +82,11 @@ public final class LayeredLayoutProvider extends AbstractLayoutProvider implemen
         // value)
         IGraphTransformer<ElkNode> graphImporter = new ElkGraphTransformer();
         LGraph layeredGraph = graphImporter.importGraph(elkgraph);
-        
+
         // Prepare a layout test and return the test execution state
         return elkLayered.prepareLayoutTest(layeredGraph);
     }
-    
+
     /**
      * Return the layered layout algorithm.
      * 

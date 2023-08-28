@@ -39,9 +39,9 @@ import org.eclipse.emf.common.util.ECollections;
 import com.google.common.collect.Lists;
 
 /**
- * Contains implementations of the {@link GraphAdapters} interfaces for the ElkGraph. To obtain an
- * adapter for a full ElkGraph, simply call {@link #adapt(ElkNode)}. To obtain an adapter only for a
- * single node, call {@link #adaptSingleNode(ElkNode)}.
+ * Contains implementations of the {@link GraphAdapters} interfaces for the ElkGraph. To obtain an adapter for a full
+ * ElkGraph, simply call {@link #adapt(ElkNode)}. To obtain an adapter only for a single node, call
+ * {@link #adaptSingleNode(ElkNode)}.
  * 
  * @author uru
  */
@@ -73,7 +73,6 @@ public final class ElkGraphAdapters {
         return new ElkNodeAdapter(node.getParent() == null ? null : adapt(node.getParent()), node);
     }
 
-
     /**
      * Creates a single port adapter for the given port.
      * 
@@ -84,30 +83,28 @@ public final class ElkGraphAdapters {
     public static ElkPortAdapter adaptSinglePort(final ElkPort port) {
         return new ElkPortAdapter(port);
     }
-    
+
     /**
      * Implements basic adpater functionality for {@link ElkGraphElement}s.
      * 
      * @param <T>
      *            the type of the underlying graph element.
      */
-    private abstract static class AbstractElkGraphElementAdapter<T extends ElkShape> implements
-            GraphElementAdapter<T> {
-        
+    private abstract static class AbstractElkGraphElementAdapter<T extends ElkShape> implements GraphElementAdapter<T> {
+
         private static final IProperty<Double> OFFSET_PROXY = new Property<>(CoreOptions.PORT_BORDER_OFFSET, 0.0);
-        
+
         // let the elements be accessed by extending classes
         // CHECKSTYLEOFF VisibilityModifier
         /** The wrapped element. */
         protected T element;
         // CHECKSTYLEON VisibilityModifier
         /**
-         * Internally used versatile data field. Can be used for arbitrary information.
-         * No assumptions about its value or validity should be made.
+         * Internally used versatile data field. Can be used for arbitrary information. No assumptions about its value
+         * or validity should be made.
          */
         private int id;
-        
-        
+
         /**
          * Creates a new adapter for the given graph element.
          * 
@@ -118,17 +115,16 @@ public final class ElkGraphAdapters {
             this.element = element;
         }
 
-
         @SuppressWarnings("unchecked")
         public <P> P getProperty(final IProperty<P> prop) {
             // the node spacing implementation requires a default value for the offset property
             if (prop.equals(CoreOptions.PORT_BORDER_OFFSET)) {
                 return (P) element.getProperty(OFFSET_PROXY);
             }
-            
+
             return element.getProperty(prop);
         }
-        
+
         @Override
         public <P> boolean hasProperty(final IProperty<P> prop) {
             return element.hasProperty(prop);
@@ -179,7 +175,7 @@ public final class ElkGraphAdapters {
 
         public void setMargin(final ElkMargin margin) {
             // analog to the padding case, we copy the margins object here
-            ElkMargin newMargin = new ElkMargin(margin); 
+            ElkMargin newMargin = new ElkMargin(margin);
             element.setProperty(CoreOptions.MARGINS, newMargin);
         }
 
@@ -197,16 +193,17 @@ public final class ElkGraphAdapters {
     /**
      * Adapter for ElkGraphs rooted at a given node.
      */
-    public static final class ElkGraphAdapter extends AbstractElkGraphElementAdapter<ElkNode> implements
-            GraphAdapter<ElkNode> {
-        
+    public static final class ElkGraphAdapter extends AbstractElkGraphElementAdapter<ElkNode>
+            implements GraphAdapter<ElkNode> {
+
         /** cached list of child node adapters. */
         private List<NodeAdapter<?>> childNodes = null;
-        
+
         /**
          * Creates a new adapter for the ElkGraph rooted at the given node.
          * 
-         * @param node root of the ElkGraph to be adapted.
+         * @param node
+         *            root of the ElkGraph to be adapted.
          */
         private ElkGraphAdapter(final ElkNode node) {
             super(node);
@@ -227,9 +224,9 @@ public final class ElkGraphAdapters {
     /**
      * Adapter for {@link ElkNode}s.
      */
-    public static final class ElkNodeAdapter extends AbstractElkGraphElementAdapter<ElkNode> implements
-            NodeAdapter<ElkNode> {
-        
+    public static final class ElkNodeAdapter extends AbstractElkGraphElementAdapter<ElkNode>
+            implements NodeAdapter<ElkNode> {
+
         /** The graph adapter that created this node adapter. */
         private ElkGraphAdapter parentGraphAdapter = null;
         /** Cached list of label adapters. */
@@ -240,8 +237,7 @@ public final class ElkGraphAdapters {
         private List<EdgeAdapter<?>> incomingEdgeAdapters = null;
         /** Cached list of edge adapters for outgoing edges. */
         private List<EdgeAdapter<?>> outgoingEdgeAdapters = null;
-        
-        
+
         /**
          * Creates a new adapter for the given node.
          * 
@@ -254,7 +250,6 @@ public final class ElkGraphAdapters {
             super(node);
             parentGraphAdapter = parent;
         }
-        
 
         @Override
         public GraphAdapter<?> getGraph() {
@@ -328,8 +323,8 @@ public final class ElkGraphAdapters {
     /**
      * Adapter for {@link ElkLabel}s.
      */
-    private static final class ElkLabelAdapter extends AbstractElkGraphElementAdapter<ElkLabel> implements
-            LabelAdapter<ElkLabel> {
+    private static final class ElkLabelAdapter extends AbstractElkGraphElementAdapter<ElkLabel>
+            implements LabelAdapter<ElkLabel> {
 
         /**
          * Creates a new adapter for the given label.
@@ -340,18 +335,17 @@ public final class ElkGraphAdapters {
         private ElkLabelAdapter(final ElkLabel label) {
             super(label);
         }
-        
-        
+
         @Override
         public LabelSide getSide() {
             return element.getProperty(LabelSide.LABEL_SIDE);
         }
-        
+
         @Override
         public String getText() {
             return element.getText();
         }
-        
+
     }
 
     /**
@@ -359,7 +353,7 @@ public final class ElkGraphAdapters {
      */
     private static final class ElkPortAdapter extends AbstractElkGraphElementAdapter<ElkPort>
             implements PortAdapter<ElkPort> {
-        
+
         /** Cached list of label adapters. */
         private List<LabelAdapter<?>> labelAdapters = null;
         /** Cached list of edge adapters for incoming edges. */
@@ -367,17 +361,22 @@ public final class ElkGraphAdapters {
         /** Cached list of edge adapters for outgoing edges. */
         private List<EdgeAdapter<?>> outgoingEdgeAdapters = null;
 
-        
+        private ElkPortAdapter parentPortAdapter = null;
+
         /**
          * Creates a new adapter for the given port.
          * 
-         * @param port the port to adapt.
+         * @param port
+         *            the port to adapt.
          */
         private ElkPortAdapter(final ElkPort port) {
             super(port);
+            if (port.getParent() instanceof ElkPort) {
+                parentPortAdapter = new ElkPortAdapter(port.getParentPort());
+            }
+
         }
 
-        
         public PortSide getSide() {
             return element.getProperty(CoreOptions.PORT_SIDE);
         }
@@ -414,21 +413,21 @@ public final class ElkGraphAdapters {
 
         public boolean hasCompoundConnections() {
             ElkNode node = element.getParent();
-            
+
             for (ElkEdge edge : element.getOutgoingEdges()) {
                 for (ElkConnectableShape target : edge.getTargets()) {
                     if (ElkGraphUtil.isDescendant(ElkGraphUtil.connectableShapeToNode(target), node)) {
                         return true;
-                        
+
                     } else if (ElkGraphUtil.connectableShapeToNode(target) == node
                             && edge.getProperty(CoreOptions.INSIDE_SELF_LOOPS_YO)) {
-                        
+
                         // Inside self loops are treated as compound connections, too
                         return true;
                     }
                 }
             }
-            
+
             for (ElkEdge edge : element.getIncomingEdges()) {
                 for (ElkConnectableShape source : edge.getSources()) {
                     if (ElkGraphUtil.isDescendant(ElkGraphUtil.connectableShapeToNode(source), node)) {
@@ -436,8 +435,19 @@ public final class ElkGraphAdapters {
                     }
                 }
             }
-            
+
             return false;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see org.eclipse.elk.core.util.adapters.GraphAdapters.PortAdapter#getParentPortAdapter()
+         */
+        @Override
+        public PortAdapter<ElkPort> getParentPortAdapter() {
+            // TODO Auto-generated method stub
+            return this.parentPortAdapter;
         }
     }
 
@@ -445,13 +455,12 @@ public final class ElkGraphAdapters {
      * Adapter for {@link ElkEdge}s.
      */
     private static final class ElkEdgeAdapter implements EdgeAdapter<ElkEdge> {
-        
+
         /** The wrapped edge. */
         private ElkEdge element;
         /** Cached list of label adapters. */
         private List<LabelAdapter<?>> labelAdapters = null;
 
-        
         /**
          * Creates a new adapter for the given edge.
          * 
@@ -472,24 +481,23 @@ public final class ElkGraphAdapters {
             return labelAdapters;
         }
     }
-    
+
     /**
-     * The default comparator for ports. Ports are sorted by side (north, east, south, west) in
-     * clockwise order, beginning at the top left corner.
-     */
-    public static final PortComparator DEFAULT_PORTLIST_SORTER = new PortComparator();
-    
-    /**
-     * A comparator for ports. Ports are sorted by side (north, east, south, west) in clockwise order,
+     * The default comparator for ports. Ports are sorted by side (north, east, south, west) in clockwise order,
      * beginning at the top left corner.
      */
+    public static final PortComparator DEFAULT_PORTLIST_SORTER = new PortComparator();
+
+    /**
+     * A comparator for ports. Ports are sorted by side (north, east, south, west) in clockwise order, beginning at the
+     * top left corner.
+     */
     public static class PortComparator implements Comparator<ElkPort> {
-        
+
         @Override
         public int compare(final ElkPort port1, final ElkPort port2) {
-            int ordinalDifference =
-                    port1.getProperty(CoreOptions.PORT_SIDE).ordinal()
-                            - port2.getProperty(CoreOptions.PORT_SIDE).ordinal();
+            int ordinalDifference = port1.getProperty(CoreOptions.PORT_SIDE).ordinal()
+                    - port2.getProperty(CoreOptions.PORT_SIDE).ordinal();
 
             // Sort by side first
             if (ordinalDifference != 0) {
@@ -529,6 +537,6 @@ public final class ElkGraphAdapters {
                 throw new IllegalStateException("Port side is undefined");
             }
         }
-        
+
     }
 }

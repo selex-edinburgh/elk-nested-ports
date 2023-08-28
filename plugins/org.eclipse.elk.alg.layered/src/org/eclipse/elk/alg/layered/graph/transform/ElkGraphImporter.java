@@ -879,7 +879,6 @@ class ElkGraphImporter {
             if (!elkport.getProperty(LayeredOptions.NO_LAYOUT)) {
                 // alfa
                 setSubPortsPositions(elkport);
-
                 for (ElkPort subport : elkport.getSubPorts()) {
                     transformPort(subport, lnode, graphProperties, direction, portConstraints);
                 }
@@ -937,6 +936,8 @@ class ElkGraphImporter {
         LPort lport = new LPort();
         lport.copyProperties(elkport);
         PortSide side = elkport.getProperty(LayeredOptions.PORT_SIDE);
+        
+        //alfa
         ElkPort parentPort = elkport.getParentPort();
         while (side == PortSide.UNDEFINED && parentPort != null) {
             if (parentPort != null) {
@@ -944,6 +945,12 @@ class ElkGraphImporter {
             }
             parentPort = parentPort.getParentPort();
         }
+        for (ElkPort subPort: elkport.getSubPorts()) {
+            LPort  lsubport = (LPort) nodeAndPortMap.get(subPort);
+            lport.addSubPort(lsubport);
+        }
+        //end alfa
+        
         lport.setSide(side);
         lport.setProperty(InternalProperties.ORIGIN, elkport);
         lport.setNode(parentLNode);

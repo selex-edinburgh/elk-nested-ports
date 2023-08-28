@@ -14,6 +14,7 @@ import java.util.Set;
 import org.eclipse.elk.alg.common.nodespacing.NodeDimensionCalculation;
 import org.eclipse.elk.alg.layered.graph.LGraph;
 import org.eclipse.elk.alg.layered.graph.LGraphAdapters;
+import org.eclipse.elk.alg.layered.graph.LGraphAdapters.LGraphAdapter;
 import org.eclipse.elk.alg.layered.graph.LLabel;
 import org.eclipse.elk.alg.layered.graph.LNode;
 import org.eclipse.elk.alg.layered.graph.LNode.NodeType;
@@ -60,11 +61,12 @@ public final class LabelAndNodeSizeProcessor implements ILayoutProcessor<LGraph>
     public void process(final LGraph layeredGraph, final IElkProgressMonitor monitor) {
         monitor.begin("Node and Port Label Placement and Node Sizing", 1);
         
-        NodeDimensionCalculation.calculateLabelAndNodeSizes(LGraphAdapters.adapt(
+        LGraphAdapter temp = LGraphAdapters.adapt(
                 layeredGraph,
                 true,
                 true,
-                node -> node.getType() == NodeType.NORMAL));
+                node -> node.getType() == NodeType.NORMAL);
+        NodeDimensionCalculation.calculateLabelAndNodeSizes(temp);
         
         // If the graph has external ports, we need to treat labels of external port dummies a bit differently,
         // which is the reason why we haven't handed them to the label and node size processing code

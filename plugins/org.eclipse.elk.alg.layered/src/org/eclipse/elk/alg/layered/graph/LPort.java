@@ -9,6 +9,7 @@
  *******************************************************************************/
 package org.eclipse.elk.alg.layered.graph;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -75,6 +76,10 @@ public final class LPort extends LShape {
      * of space we will have to reserve for labels in the {@link LabelAndNodeSizeProcessor}.
      */
     private boolean connectedToExternalNodes = true;
+    
+    
+    protected List<LPort> subPorts = new ArrayList<LPort>(); 
+    protected LPort parentPort = null;
     
     /**
      * Returns the node that owns this port.
@@ -433,4 +438,48 @@ public final class LPort extends LShape {
         }
     }
 
+    /**
+     * @return the subPorts
+     */
+    public List<LPort> getSubPorts() {
+        return subPorts;
+    }
+
+    /**
+     * @param add a subPort
+     */
+    public void addSubPort(LPort subPort) {
+        this.subPorts.add(subPort);
+        subPort.setParentPort(this);
+    }
+    
+    /***
+     * Add a subPort
+     * 
+     * @param subPort
+     */
+    public void removeSubPort(LPort subPort) {
+        this.subPorts.remove(subPort);
+        if (subPort.getParentPort().equals(this)) {
+            subPort.setParentPort(null);
+        }
+    }
+
+    /**
+     * @return the parentPort
+     */
+    public LPort getParentPort() {
+        return parentPort;
+    }
+
+    /**
+     * @param parentPort the parentPort to set
+     */
+    public void setParentPort(LPort parentPort) {
+        if (parentPort == null && this.parentPort != null) {
+            this.parentPort.removeSubPort(this);
+        }
+        this.parentPort = parentPort;
+    }
+    
 }

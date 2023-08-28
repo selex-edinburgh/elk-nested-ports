@@ -9,10 +9,13 @@
  *******************************************************************************/
 package org.eclipse.elk.alg.common.nodespacing;
 
+import java.util.Map.Entry;
+
 import org.eclipse.elk.alg.common.nodespacing.cellsystem.Cell;
 import org.eclipse.elk.alg.common.nodespacing.cellsystem.ContainerArea;
 import org.eclipse.elk.alg.common.nodespacing.cellsystem.GridContainerCell;
 import org.eclipse.elk.alg.common.nodespacing.internal.NodeContext;
+import org.eclipse.elk.alg.common.nodespacing.internal.PortContext;
 import org.eclipse.elk.alg.common.nodespacing.internal.algorithm.CellSystemConfigurator;
 import org.eclipse.elk.alg.common.nodespacing.internal.algorithm.HorizontalPortPlacementSizeCalculator;
 import org.eclipse.elk.alg.common.nodespacing.internal.algorithm.InsidePortLabelCellCreator;
@@ -28,8 +31,10 @@ import org.eclipse.elk.core.math.ElkPadding;
 import org.eclipse.elk.core.math.KVector;
 import org.eclipse.elk.core.options.CoreOptions;
 import org.eclipse.elk.core.options.Direction;
+import org.eclipse.elk.core.options.PortSide;
 import org.eclipse.elk.core.util.adapters.GraphAdapters.GraphAdapter;
 import org.eclipse.elk.core.util.adapters.GraphAdapters.NodeAdapter;
+import org.eclipse.elk.core.util.adapters.GraphAdapters.PortAdapter;
 
 /**
  * Knows how to calculate the size of a node and how to place its ports. Takes all
@@ -182,8 +187,13 @@ public final class NodeLabelAndSizeCalculator {
         }
         
         NodeLabelAndSizeUtilities.offsetSouthernPortsByNodeSize(nodeContext);
-        
+        for (PortContext port : nodeContext.portContexts.values()) {
+            System.out.println(port + ": " + port.portPosition);
+        }
         PortPlacementCalculator.placeVerticalPorts(nodeContext);
+        for (PortContext port : nodeContext.portContexts.values()) {
+            System.out.println(port + ": " + port.portPosition);
+        }
         PortLabelPlacementCalculator.placeVerticalPortLabels(nodeContext);
         
         

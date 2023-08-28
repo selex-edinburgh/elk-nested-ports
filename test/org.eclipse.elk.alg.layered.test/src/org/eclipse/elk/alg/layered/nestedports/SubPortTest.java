@@ -71,6 +71,10 @@ public class SubPortTest {
         ElkPort portA1_3 = ElkGraphUtil.createSubPort(portA1);
         portA1_3.setIdentifier("A1_3");
         
+        ElkPort portA2 = ElkGraphUtil.createPort(nodeA);
+        portA2.setIdentifier("A2");
+        portA2.setProperty(LayeredOptions.PORT_SIDE, PortSide.WEST);
+        
         ElkNode nodeB = ElkGraphUtil.createNode(parentNode);
         nodeB.setIdentifier("B");
         nodeB.setProperty(LayeredOptions.PORT_CONSTRAINTS, PortConstraints.FIXED_SIDE);
@@ -84,8 +88,12 @@ public class SubPortTest {
         ElkPort portB1_2 = ElkGraphUtil.createSubPort(portB1);
         portB1_2.setIdentifier("B1_2");
         
+        ElkPort portB2 = ElkGraphUtil.createPort(nodeB);
+        portB2.setIdentifier("B2");
+        portB2.setProperty(LayeredOptions.PORT_SIDE, PortSide.WEST);
         
-//        ElkEdge edge = ElkGraphUtil.createSimpleEdge(portA1, portB1);
+        
+//      ElkEdge edge = ElkGraphUtil.createSimpleEdge(portA1, portB1);
         ElkEdge edge = ElkGraphUtil.createSimpleEdge(portA1_1, portB1_1);
         
         

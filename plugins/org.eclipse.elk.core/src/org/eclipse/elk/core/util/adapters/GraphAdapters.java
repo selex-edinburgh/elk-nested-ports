@@ -43,6 +43,7 @@ public interface GraphAdapters {
      */
     public interface GraphElementAdapter<T> {
 
+       
         /**
          * @return the size of the graph element, the {@code x} value of the {@link KVector} defines
          *         the width, the {@code y} value the height.
@@ -214,6 +215,8 @@ public interface GraphAdapters {
      *            the type of the underlying graph element.
      */
     public interface PortAdapter<T> extends GraphElementAdapter<T> {
+        
+        PortAdapter<T> getParentPortAdapter();
         
         /**
          * @return the port's side.
