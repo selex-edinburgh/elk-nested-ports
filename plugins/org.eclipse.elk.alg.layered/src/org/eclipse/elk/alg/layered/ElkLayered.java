@@ -623,26 +623,23 @@ public final class ElkLayered {
             }
             // elkjs-exclude-end
 
-            System.out.println(slotIndex + ": "+ processor.getClass().getName());
+            System.out.println(slotIndex + ": " + processor.getClass().getName());
             notifyProcessorReady(lgraph, processor);
             processor.process(lgraph, monitor.subTask(monitorProgress));
 
-            
             if (lgraph.getLayers().size() > 0) {
-                LNode node = lgraph.getLayers().get(1).getNodes().get(0);
-                for (LPort port : node.getPorts()) {
-                    System.out.println(port.toString() + ": " + port.getPosition());
+                for (Layer layer : lgraph.getLayers()) {
+                    for (LNode node : layer.getNodes()) {
+                        for (LPort port : node.getPorts()) {
+                            System.out.println(port.toString() + ": " + port.getPosition());
+                        }
+                    }
                 }
             }
 
             notifyProcessorFinished(lgraph, processor);
 
             slotIndex++;
-        }
-
-        if (lgraph.getLayerlessNodes().size() > 0) {
-            LNode node = lgraph.getLayerlessNodes().get(1);
-            System.out.println(node.getPorts());
         }
 
         // Graph debug output
