@@ -93,9 +93,9 @@ public class SubPortTest {
         portB2.setProperty(LayeredOptions.PORT_SIDE, PortSide.WEST);
         
         
-        ElkEdge edge1 = ElkGraphUtil.createSimpleEdge(portA1, portB1);
+//        ElkEdge edge1 = ElkGraphUtil.createSimpleEdge(portA1, portB1);
         ElkEdge edge2 = ElkGraphUtil.createSimpleEdge(portA1_1, portB1_1);
-        
+//        ElkEdge edge3 = ElkGraphUtil.createSimpleEdge(portA1, portA1_1);
         
 
         ResourceSet resourceSet = new ResourceSetImpl();

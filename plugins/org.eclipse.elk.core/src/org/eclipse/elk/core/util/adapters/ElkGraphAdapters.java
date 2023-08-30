@@ -9,8 +9,11 @@
  *******************************************************************************/
 package org.eclipse.elk.core.util.adapters;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.elk.core.math.ElkMargin;
 import org.eclipse.elk.core.math.ElkPadding;
@@ -363,6 +366,10 @@ public final class ElkGraphAdapters {
 
         private ElkPortAdapter parentPortAdapter = null;
 
+        private List<PortAdapter<ElkPort>> subPortAdapters = new ArrayList<>();
+
+        static private Map<ElkPort, ElkPortAdapter> portToAdapterMap = new HashMap<>();
+
         /**
          * Creates a new adapter for the given port.
          * 
@@ -372,9 +379,16 @@ public final class ElkGraphAdapters {
         private ElkPortAdapter(final ElkPort port) {
             super(port);
             if (port.getParent() instanceof ElkPort) {
-                parentPortAdapter = new ElkPortAdapter(port.getParentPort());
+                parentPortAdapter = portToAdapterMap.get(element.getParentPort());
+                if (parentPortAdapter == null) {
+                    parentPortAdapter = new ElkPortAdapter(port.getParentPort());
+                    ElkPortAdapter.portToAdapterMap.put(element, parentPortAdapter);
+                }
+                parentPortAdapter.getSubPortAdapters().add(this);
             }
-
+            if (portToAdapterMap.get(element) == null) {
+                portToAdapterMap.put(element, this);
+            }
         }
 
         public PortSide getSide() {
@@ -448,6 +462,17 @@ public final class ElkGraphAdapters {
         public PortAdapter<ElkPort> getParentPortAdapter() {
             // TODO Auto-generated method stub
             return this.parentPortAdapter;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see org.eclipse.elk.core.util.adapters.GraphAdapters.PortAdapter#getSubPorts()
+         */
+        @Override
+        public List<PortAdapter<ElkPort>> getSubPortAdapters() {
+            // TODO Auto-generated method stub
+            return subPortAdapters;
         }
     }
 

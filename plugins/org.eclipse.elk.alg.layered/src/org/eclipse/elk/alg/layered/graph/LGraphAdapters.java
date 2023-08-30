@@ -9,9 +9,12 @@
  *******************************************************************************/
 package org.eclipse.elk.alg.layered.graph;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 import org.eclipse.elk.alg.layered.graph.LNode.NodeType;
@@ -33,18 +36,16 @@ import org.eclipse.elk.graph.properties.IProperty;
 import com.google.common.collect.Lists;
 
 /**
- * Provides implementations of the {@link org.eclipse.elk.core.util.adapters.GraphAdapters
- * GraphAdapters} interfaces for the LGraph. The adapted graph can then be fed to ELK's node size
- * calculation code, for example. To obtain an adapter for an {@link LGraph}, simply call
- * {@link #adapt(LGraph)}.
+ * Provides implementations of the {@link org.eclipse.elk.core.util.adapters.GraphAdapters GraphAdapters} interfaces for
+ * the LGraph. The adapted graph can then be fed to ELK's node size calculation code, for example. To obtain an adapter
+ * for an {@link LGraph}, simply call {@link #adapt(LGraph)}.
  */
 public final class LGraphAdapters {
 
     private LGraphAdapters() {
         throw new IllegalStateException("Private constructor, not to be instantiated!");
     }
-    
-    
+
     /**
      * Adapts the given {@link LGraph}.
      * 
@@ -55,65 +56,61 @@ public final class LGraphAdapters {
     public static LGraphAdapter adapt(final LGraph graph) {
         return adapt(graph, false);
     }
-    
+
     /**
      * Adapts the given {@link LGraph}. Transparently provides access to edges connected to north/south port dummies.
      *
      * @param graph
      *            the graph that should be wrapped in an adapter.
      * @param transparentNorthSouthEdges
-     *            {@code true} if edges connected to north south port dummies should appear to be
-     *            directly connected to their original north/south ports. This effectively makes the
-     *            north/south port dummies "transparent" in the sense that edges connected to them
-     *            appear to be connected to the original connection points.
+     *            {@code true} if edges connected to north south port dummies should appear to be directly connected to
+     *            their original north/south ports. This effectively makes the north/south port dummies "transparent" in
+     *            the sense that edges connected to them appear to be connected to the original connection points.
      * @return an {@link LGraphAdapter} for the passed graph.
      */
     public static LGraphAdapter adapt(final LGraph graph, final boolean transparentNorthSouthEdges) {
         return new LGraphAdapter(graph, transparentNorthSouthEdges, false, n -> true);
-     }
-    
+    }
+
     /**
-     * Adapts the given {@link LGraph}. Transparently provides access to edges connected to
-     * north/south port dummies and allows to filter out nodes that client code shouldn't see.
+     * Adapts the given {@link LGraph}. Transparently provides access to edges connected to north/south port dummies and
+     * allows to filter out nodes that client code shouldn't see.
      *
      * @param graph
      *            the graph that should be wrapped in an adapter.
      * @param transparentNorthSouthEdges
-     *            {@code true} if edges connected to north south port dummies should appear to be
-     *            directly connected to their original north/south ports. This effectively makes the
-     *            north/south port dummies "transparent" in the sense that edges connected to them
-     *            appear to be connected to the original connection points.
+     *            {@code true} if edges connected to north south port dummies should appear to be directly connected to
+     *            their original north/south ports. This effectively makes the north/south port dummies "transparent" in
+     *            the sense that edges connected to them appear to be connected to the original connection points.
      * @param transparentCommentNodes
-     *            {@code true} if attached comment nodes temporarily removed from the graph should
-     *            be included in the adapted graph as if they were included.
+     *            {@code true} if attached comment nodes temporarily removed from the graph should be included in the
+     *            adapted graph as if they were included.
      * @param nodeFilter
-     *            predicate that returns {@code true} for a node that should be visible in the adapted
-     *            graph and {@code false} for one that should not. Usual application is to hide
-     *            certain kinds of dummy nodes.
+     *            predicate that returns {@code true} for a node that should be visible in the adapted graph and
+     *            {@code false} for one that should not. Usual application is to hide certain kinds of dummy nodes.
      * @return an {@link LGraphAdapter} for the passed graph.
      */
     public static LGraphAdapter adapt(final LGraph graph, final boolean transparentNorthSouthEdges,
             final boolean transparentCommentNodes, final Predicate<LNode> nodeFilter) {
-        
+
         return new LGraphAdapter(graph, transparentNorthSouthEdges, transparentCommentNodes, nodeFilter);
     }
-    
+
     /**
      * Adapts the given single node. Transparently provides access to edges connected to north/south port dummies.
      *
      * @param node
      *            the node that should be wrapped in an adapter.
      * @param transparentNorthSouthEdges
-     *            {@code true} if edges connected to north south port dummies should appear to be
-     *            directly connected to their original north/south ports. This effectively makes the
-     *            north/south port dummies "transparent" in the sense that edges connected to them
-     *            appear to be connected to the original connection points.
+     *            {@code true} if edges connected to north south port dummies should appear to be directly connected to
+     *            their original north/south ports. This effectively makes the north/south port dummies "transparent" in
+     *            the sense that edges connected to them appear to be connected to the original connection points.
      * @return an {@link LNodeAdapter} for the passed node.
      */
     public static LNodeAdapter adapt(final LNode node, final boolean transparentNorthSouthEdges) {
         return new LNodeAdapter(null, node, transparentNorthSouthEdges);
     }
-    
+
     /**
      * Adapts the given {@link LLabel}.
      * 
@@ -124,11 +121,12 @@ public final class LGraphAdapters {
     public static LLabelAdapter adapt(final LLabel label) {
         return new LLabelAdapter(label);
     }
-    
-    
+
     /**
      * Basic base class for adapters that adapt {@link LGraphElement}s.
-     * @param <T> type of the adapted element.
+     * 
+     * @param <T>
+     *            type of the adapted element.
      */
     private abstract static class AbstractLShapeAdapter<T extends LShape> implements GraphElementAdapter<T> {
 
@@ -136,8 +134,7 @@ public final class LGraphAdapters {
         /** The wrapped element. */
         protected T element;
         // CHECKSTYLEON VisibilityModifier
-        
-        
+
         /**
          * Creates a new adapter for the given element.
          * 
@@ -147,11 +144,10 @@ public final class LGraphAdapters {
         AbstractLShapeAdapter(final T element) {
             this.element = element;
         }
-        
+
         public T getElement() {
             return element;
         }
-        
 
         @Override
         public KVector getSize() {
@@ -200,8 +196,7 @@ public final class LGraphAdapters {
      * Adapter for {@link LGraph}s.
      */
     public static final class LGraphAdapter implements GraphAdapter<LGraph> {
-        
-        
+
         // CHECKSTYLEOFF VisibilityModifier
         /** The wrapped element. */
         protected final LGraph element;
@@ -209,8 +204,8 @@ public final class LGraphAdapters {
         /** List of cached node adapters. */
         private List<NodeAdapter<?>> nodeAdapters = null;
         /**
-         * Whether to simulate that edges are directly connected to north south ports instead of to
-         * north/south port dummies.
+         * Whether to simulate that edges are directly connected to north south ports instead of to north/south port
+         * dummies.
          */
         private final boolean transparentNorthSouthEdges;
         /**
@@ -226,18 +221,18 @@ public final class LGraphAdapters {
          * @param element
          *            the graph to be adapted.
          * @param transparentNorthSouthEdges
-         *            whether to simulate that edges are directly connected to north south ports 
-         *            instead of to north/south port dummies.
+         *            whether to simulate that edges are directly connected to north south ports instead of to
+         *            north/south port dummies.
          */
         private LGraphAdapter(final LGraph element, final boolean transparentNorthSouthEdges,
                 final boolean transparentCommentNodes, final Predicate<LNode> nodeFilter) {
-            
+
             this.element = element;
             this.transparentNorthSouthEdges = transparentNorthSouthEdges;
             this.transparentCommentNodes = transparentCommentNodes;
             this.nodeFilter = nodeFilter;
         }
-        
+
         @Override
         public KVector getSize() {
             return element.getSize();
@@ -279,14 +274,14 @@ public final class LGraphAdapters {
                     for (LNode n : l.getNodes()) {
                         if (nodeFilter.test(n)) {
                             nodeAdapters.add(new LNodeAdapter(this, n, transparentNorthSouthEdges));
-                            
+
                             if (transparentCommentNodes) {
                                 if (n.hasProperty(InternalProperties.TOP_COMMENTS)) {
                                     for (LNode comment : n.getProperty(InternalProperties.TOP_COMMENTS)) {
                                         nodeAdapters.add(new LNodeAdapter(this, comment, false));
                                     }
                                 }
-                                
+
                                 if (n.hasProperty(InternalProperties.BOTTOM_COMMENTS)) {
                                     for (LNode comment : n.getProperty(InternalProperties.BOTTOM_COMMENTS)) {
                                         nodeAdapters.add(new LNodeAdapter(this, comment, false));
@@ -322,8 +317,8 @@ public final class LGraphAdapters {
         /** List of cached port adapters. */
         private List<PortAdapter<?>> portAdapters = null;
         /**
-         * Whether to simulate that edges are directly connected to north south ports instead of to
-         * north/south port dummies.
+         * Whether to simulate that edges are directly connected to north south ports instead of to north/south port
+         * dummies.
          */
         private boolean transparentNorthSouthEdges;
 
@@ -335,15 +330,15 @@ public final class LGraphAdapters {
          * @param element
          *            the node to be adapted.
          * @param transparentNorthSouthEdges
-         *            whether to simulate that edges are directly connected to north south ports
-         *            instead of to north/south port dummies.
+         *            whether to simulate that edges are directly connected to north south ports instead of to
+         *            north/south port dummies.
          */
         LNodeAdapter(final LGraphAdapter parent, final LNode element, final boolean transparentNorthSouthEdges) {
             super(element);
             this.parentGraphAdapter = parent;
             this.transparentNorthSouthEdges = transparentNorthSouthEdges;
         }
-        
+
         @Override
         public GraphAdapter<?> getGraph() {
             return parentGraphAdapter;
@@ -379,7 +374,7 @@ public final class LGraphAdapters {
 
         @Override
         public Iterable<EdgeAdapter<?>> getOutgoingEdges() {
-         // we have no directly connected edges
+            // we have no directly connected edges
             return Collections.emptyList();
         }
 
@@ -396,7 +391,7 @@ public final class LGraphAdapters {
                 Collections.sort(element.getPorts(), (Comparator<LPort>) comparator);
             }
         }
-        
+
         @Override
         public boolean isCompoundNode() {
             return element.getProperty(InternalProperties.COMPOUND_NODE);
@@ -442,35 +437,47 @@ public final class LGraphAdapters {
         /** List of cached edge adapters for outgoing edges. */
         private List<EdgeAdapter<?>> outgoingEdgeAdapters = null;
         /**
-         * Whether to simulate that edges are directly connected to north south ports instead of to
-         * north/south port dummies.
+         * Whether to simulate that edges are directly connected to north south ports instead of to north/south port
+         * dummies.
          */
         private boolean transparentNorthSouthEdges;
-        
+
         private LPortAdapter parentPortAdapter;
+
+        private List<PortAdapter<LPort>> subPortAdapters = new ArrayList<>();
+
+        private static Map<LPort, LPortAdapter> portToAdapterMap = new HashMap<>();
+
         /**
          * Creates a new adapter for the given port.
          * 
          * @param element
          *            the port to be adapted.
          * @param transparentNorthSouthEdges
-         *            whether to simulate that edges are directly connected to north south ports
-         *            instead of to north/south port dummies.
+         *            whether to simulate that edges are directly connected to north south ports instead of to
+         *            north/south port dummies.
          */
         LPortAdapter(final LPort element, final boolean transparentNorthSouthEdges) {
             super(element);
             this.transparentNorthSouthEdges = transparentNorthSouthEdges;
             if (element.getParentPort() instanceof LPort) {
-                parentPortAdapter = new LPortAdapter(element.getParentPort(), transparentNorthSouthEdges);
+                parentPortAdapter = portToAdapterMap.get(element.getParentPort());
+                if (parentPortAdapter == null) {
+                    parentPortAdapter = new LPortAdapter(element.getParentPort(), transparentNorthSouthEdges);
+                   portToAdapterMap.put(element, parentPortAdapter);
+                }
+                parentPortAdapter.getSubPortAdapters().add(this);
             }
-            
+            if (portToAdapterMap.get(element) == null) {
+                portToAdapterMap.put(element, this);
+            }
+
         }
-        
+
         @Override
         public LPort getElement() {
             return element;
         }
-        
 
         @Override
         public PortSide getSide() {
@@ -516,7 +523,7 @@ public final class LGraphAdapters {
                     if (portDummy != null) {
                         for (LEdge e : portDummy.getIncomingEdges()) {
                             incomingEdgeAdapters.add(new LEdgeAdapter(e));
-                       }
+                        }
                     }
                 }
             }
@@ -549,21 +556,33 @@ public final class LGraphAdapters {
             return element.getProperty(InternalProperties.INSIDE_CONNECTIONS);
         }
 
-        /* (non-Javadoc)
+        /*
+         * (non-Javadoc)
+         * 
          * @see org.eclipse.elk.core.util.adapters.GraphAdapters.PortAdapter#getParentPortAdapter()
          */
         @Override
-        public PortAdapter<LPort> getParentPortAdapter() {
+        public LPortAdapter getParentPortAdapter() {
             // TODO Auto-generated method stub
             return parentPortAdapter;
+        }
+
+        /*
+         * (non-Javadoc)
+         * 
+         * @see org.eclipse.elk.core.util.adapters.GraphAdapters.PortAdapter#getSubPorts()
+         */
+        @Override
+        public List<PortAdapter<LPort>> getSubPortAdapters() {
+            // TODO Auto-generated method stub
+            return subPortAdapters;
         }
     }
 
     /**
      * Adapter for {@link LLabel}s.
      */
-    static final class LLabelAdapter extends AbstractLShapeAdapter<LLabel> implements
-        LabelAdapter<LLabel> {
+    static final class LLabelAdapter extends AbstractLShapeAdapter<LLabel> implements LabelAdapter<LLabel> {
 
         /**
          * Creates a new adapter for the given label.
@@ -579,12 +598,12 @@ public final class LGraphAdapters {
         public LabelSide getSide() {
             return element.getProperty(LabelSide.LABEL_SIDE);
         }
-        
+
         @Override
         public String getText() {
             return element.getText();
         }
-        
+
     }
 
     /**
@@ -596,7 +615,6 @@ public final class LGraphAdapters {
         /** List of cached label adapters. */
         private List<LabelAdapter<?>> labelAdapters = null;
 
-        
         /**
          * Creates a new adapter for the given edge.
          * 
@@ -606,7 +624,6 @@ public final class LGraphAdapters {
         LEdgeAdapter(final LEdge edge) {
             this.element = edge;
         }
-        
 
         @Override
         public Iterable<LabelAdapter<?>> getLabels() {
@@ -621,25 +638,25 @@ public final class LGraphAdapters {
     }
 
     /**
-     * A comparer for ports. Ports are sorted by side (north, east, south, west) in
-     * clockwise order, beginning at the top left corner.
+     * A comparer for ports. Ports are sorted by side (north, east, south, west) in clockwise order, beginning at the
+     * top left corner.
      */
     public static final PortComparator DEFAULT_PORTLIST_SORTER = new PortComparator();
-    
+
     /**
-     * A comparer for ports. Ports are sorted by side (north, east, south, west) in
-     * clockwise order, beginning at the top left corner.
+     * A comparer for ports. Ports are sorted by side (north, east, south, west) in clockwise order, beginning at the
+     * top left corner.
      */
     public static class PortComparator implements Comparator<LPort> {
         @Override
         public int compare(final LPort port1, final LPort port2) {
             int ordinalDifference = port1.getSide().ordinal() - port2.getSide().ordinal();
-            
+
             // Sort by side first
             if (ordinalDifference != 0) {
                 return ordinalDifference;
             }
-            
+
             // In case of equal sides, sort by port index property
             Integer index1 = port1.getProperty(LayeredOptions.PORT_INDEX);
             Integer index2 = port2.getProperty(LayeredOptions.PORT_INDEX);
@@ -649,25 +666,25 @@ public final class LGraphAdapters {
                     return indexDifference;
                 }
             }
-            
+
             // In case of equal index, sort by position
             switch (port1.getSide()) {
             case NORTH:
                 // Compare x coordinates
                 return Double.compare(port1.getPosition().x, port2.getPosition().x);
-            
+
             case EAST:
                 // Compare y coordinates
                 return Double.compare(port1.getPosition().y, port2.getPosition().y);
-            
+
             case SOUTH:
                 // Compare x coordinates in reversed order
                 return Double.compare(port2.getPosition().x, port1.getPosition().x);
-            
+
             case WEST:
                 // Compare y coordinates in reversed order
                 return Double.compare(port2.getPosition().y, port1.getPosition().y);
-                
+
             default:
                 // Port sides should not be undefined
                 throw new IllegalStateException("Port side is undefined");

@@ -187,13 +187,13 @@ public final class NodeLabelAndSizeCalculator {
         }
         
         NodeLabelAndSizeUtilities.offsetSouthernPortsByNodeSize(nodeContext);
-        for (PortContext port : nodeContext.portContexts.values()) {
-            System.out.println(port + ": " + port.portPosition);
-        }
+//        for (PortContext port : nodeContext.portContexts.values()) {
+//            System.out.println(port + ": " + port.portPosition);
+//        }
         PortPlacementCalculator.placeVerticalPorts(nodeContext);
-        for (PortContext port : nodeContext.portContexts.values()) {
-            System.out.println(port + ": " + port.portPosition);
-        }
+//        for (PortContext port : nodeContext.portContexts.values()) {
+//            System.out.println(port + ": " + port.portPosition);
+//        }
         PortLabelPlacementCalculator.placeVerticalPortLabels(nodeContext);
         
         

@@ -21,7 +21,6 @@ import org.eclipse.elk.core.options.PortConstraints;
 import org.eclipse.elk.core.options.PortSide;
 import org.eclipse.elk.core.options.SizeOptions;
 import org.eclipse.elk.core.util.adapters.GraphAdapters.PortAdapter;
-import org.eclipse.elk.graph.ElkPort;
 import org.eclipse.elk.graph.properties.IProperty;
 import org.eclipse.elk.graph.properties.Property;
 
@@ -361,6 +360,7 @@ public final class PortPlacementCalculator {
 
         // Iterate over all ports and place them
         for (PortContext portContext : nodeContext.portContexts.get(portSide)) {
+            // Alfa
             PortAdapter<?> parentPort = portContext.port.getParentPortAdapter();
             if (parentPort == null) {
                 portContext.portPosition.x = calculateVerticalPortXCoordinate(portContext, nodeWidth);
@@ -369,11 +369,14 @@ public final class PortPlacementCalculator {
                 // Update the y coordinate for the next port
                 currentYPos += portContext.portMargin.top + portContext.port.getSize().y + portContext.portMargin.bottom
                         + spaceBetweenPorts;
+                // //TODO: need to get the coordinate for each port one by one by calculating it individually
+                // setSubPortsPositions(portContext.port);
+            } else {
+                KVector position = getSubPortsPosition(portContext.port);
+                portContext.portPosition.x = position.x;
+                portContext.portPosition.y = position.y;
             }
         }
-
-        // alfa
-        // setSubPortsPositions(elkport);
     }
 
     /**
@@ -414,47 +417,94 @@ public final class PortPlacementCalculator {
      * 
      * @param elkport
      */
-    private void setSubPortsPositions(ElkPort elkport) {
-        // if (!elkport.getSubPorts().isEmpty()) {
-        //
-        // PortSide portSide = (PortSide) elkport.getProperties().get(LayeredOptions.PORT_SIDE);
-        // double portSize = 5;
-        //
-        // if (portSide == PortSide.WEST) {
-        // double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-        // for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-        // ElkPort subport = elkport.getSubPorts().get(i);
-        // double y = elkport.getY() - (portSize * (i - mid));
-        // subport.setY(y);
-        // subport.setX(elkport.getX() - portSize);
-        // }
-        // } else if (portSide == PortSide.EAST) {
-        // double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-        // for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-        // ElkPort subport = elkport.getSubPorts().get(i);
-        // double y = elkport.getY() - (portSize * (i - mid));
-        // subport.setY(y);
-        // subport.setX(elkport.getX() + portSize);
-        // }
-        // } else if (portSide == PortSide.NORTH) {
-        // double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-        // for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-        // ElkPort subport = elkport.getSubPorts().get(i);
-        // double y = elkport.getX() - (portSize * (i - mid));
-        // subport.setY(y);
-        // subport.setX(elkport.getY() - portSize);
-        // }
-        // } else if (portSide == PortSide.SOUTH) {
-        // double mid = (((double) elkport.getSubPorts().size() - 1) / 2d);
-        // for (int i = 0; i < elkport.getSubPorts().size(); i++) {
-        // ElkPort subport = elkport.getSubPorts().get(i);
-        // double y = elkport.getX() - (portSize * (i - mid));
-        // subport.setY(y);
-        // subport.setX(elkport.getY() + portSize);
-        // }
-        // }
-        //
-        // }
+    private static KVector getSubPortsPosition(PortAdapter<?> elkport) {
+
+        KVector position = elkport.getPosition();
+        PortAdapter<?> parentPort = elkport.getParentPortAdapter();
+
+        if (parentPort != null && !parentPort.getSubPortAdapters().isEmpty()) {
+            PortSide portSide = elkport.getSide();
+            double portSize = 5;
+            double mid = (((double) parentPort.getSubPortAdapters().size() - 1) / 2d);
+            int i = parentPort.getSubPortAdapters().indexOf(elkport);
+
+            if (portSide == PortSide.WEST) {
+                double y = elkport.getPosition().y - (portSize * (i - mid));
+                elkport.getPosition().y = y;
+                elkport.getPosition().x = elkport.getPosition().x - portSize;
+                System.out.println(elkport.getPosition());
+            } else if (portSide == PortSide.EAST) {
+                double y = elkport.getPosition().y - (portSize * (i - mid));
+                elkport.getPosition().y = y;
+                elkport.getPosition().x = elkport.getPosition().x + portSize;
+                System.out.println(elkport.getPosition());
+            } else if (portSide == PortSide.NORTH) {
+                double x = elkport.getPosition().x - (portSize * (i - mid));
+                elkport.getPosition().x = x;
+                elkport.getPosition().y = elkport.getPosition().y + portSize;
+                System.out.println(elkport.getPosition());
+            } else if (portSide == PortSide.SOUTH) {
+                PortAdapter<?> subport = elkport.getSubPortAdapters().get(i);
+                double x = elkport.getPosition().x - (portSize * (i - mid));
+                subport.getPosition().x = x;
+                subport.getPosition().y = elkport.getPosition().y - portSize;
+                System.out.println(subport.getPosition());
+            }
+
+        }
+        return position;
     }
 
+    /**
+     * A method to calculate the positions of sub-ports of a port.
+     * 
+     * @param elkport
+     */
+    private static void setSubPortsPositions(PortAdapter<?> elkport) {
+
+        if (!elkport.getSubPortAdapters().isEmpty()) {
+            //
+            PortSide portSide = elkport.getSide();
+            double portSize = 5;
+
+            if (portSide == PortSide.WEST) {
+                double mid = (((double) elkport.getSubPortAdapters().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPortAdapters().size(); i++) {
+                    PortAdapter<?> subport = elkport.getSubPortAdapters().get(i);
+                    double y = elkport.getPosition().y - (portSize * (i - mid));
+                    subport.getPosition().y = y;
+                    subport.getPosition().x = elkport.getPosition().x - portSize;
+                    System.out.println(subport.getPosition());
+                }
+            } else if (portSide == PortSide.EAST) {
+                double mid = (((double) elkport.getSubPortAdapters().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPortAdapters().size(); i++) {
+                    PortAdapter<?> subport = elkport.getSubPortAdapters().get(i);
+                    double y = elkport.getPosition().y - (portSize * (i - mid));
+                    subport.getPosition().y = y;
+                    subport.getPosition().x = elkport.getPosition().x + portSize;
+                    System.out.println(subport.getPosition());
+                }
+            } else if (portSide == PortSide.NORTH) {
+                double mid = (((double) elkport.getSubPortAdapters().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPortAdapters().size(); i++) {
+                    PortAdapter<?> subport = elkport.getSubPortAdapters().get(i);
+                    double x = elkport.getPosition().x - (portSize * (i - mid));
+                    subport.getPosition().x = x;
+                    subport.getPosition().y = elkport.getPosition().y + portSize;
+                    System.out.println(subport.getPosition());
+                }
+            } else if (portSide == PortSide.SOUTH) {
+                double mid = (((double) elkport.getSubPortAdapters().size() - 1) / 2d);
+                for (int i = 0; i < elkport.getSubPortAdapters().size(); i++) {
+                    PortAdapter<?> subport = elkport.getSubPortAdapters().get(i);
+                    double x = elkport.getPosition().x - (portSize * (i - mid));
+                    subport.getPosition().x = x;
+                    subport.getPosition().y = elkport.getPosition().y - portSize;
+                    System.out.println(subport.getPosition());
+                }
+            }
+
+        }
+    }
 }

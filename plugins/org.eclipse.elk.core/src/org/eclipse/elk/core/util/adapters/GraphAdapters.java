@@ -10,6 +10,7 @@
 package org.eclipse.elk.core.util.adapters;
 
 import java.util.Comparator;
+import java.util.List;
 
 import org.eclipse.elk.core.math.ElkMargin;
 import org.eclipse.elk.core.math.ElkPadding;
@@ -216,7 +217,11 @@ public interface GraphAdapters {
      */
     public interface PortAdapter<T> extends GraphElementAdapter<T> {
         
+        // Alfa
         PortAdapter<T> getParentPortAdapter();
+        
+        List<PortAdapter<T>> getSubPortAdapters();
+        // End Alfa
         
         /**
          * @return the port's side.
